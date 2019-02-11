@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>[LeetCode] #015 Three Sum - Improve speed</title>
+		<meta name="HandheldFriendly" content="True">
+		<meta name="MobileOptimized" content="320">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400i&amp;subset=latin-ext" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../assets/css/normalize.css?v=c64ad04006">
+		<link rel="stylesheet" type="text/css" href="../assets/css/icons.css?v=c64ad04006">
+		<link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=c64ad04006">
+		<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="amp/" />
+    
+    <meta property="og:site_name" content="CG.Lee Blog" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="[LeetCode] #015 Three Sum - Improve speed" />
+    <meta property="og:description" content="이번 포스트에서는 지난번에 구현한 3Sum의 속도를 개선시킨 알고리즘을 설명한다. 알고리즘 설명은 이 링크에서 확인할 수 있다. 먼저 의사코드를 작성하면 아래와 같다. 입력받은 요소 &#x3D; [-4, -3, -2, 1, 0, 1, 2, 2, 3] 0. 리턴받을 리스트를 생성한다. 1. 입력받은 요소를 오름차순정렬한다. 2. 입력받은 요소들을 검색사전으로 만들기위해 해쉬맵을 생성한다. 3. 해쉬맵의 키에" />
+    <meta property="og:url" content="https://blog.chulgil.me/leetcode-015-2/" />
+    <meta property="article:published_time" content="2019-01-29T19:01:57.000Z" />
+    <meta property="article:modified_time" content="2019-02-03T02:30:47.000Z" />
+    <meta property="article:tag" content="kr" />
+    <meta property="article:tag" content="CODE" />
+    <meta property="article:tag" content="ALGORITHM" />
+    <meta property="article:tag" content="LeetCode" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/chulgil2" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="[LeetCode] #015 Three Sum - Improve speed" />
+    <meta name="twitter:description" content="이번 포스트에서는 지난번에 구현한 3Sum의 속도를 개선시킨 알고리즘을 설명한다. 알고리즘 설명은 이 링크에서 확인할 수 있다. 먼저 의사코드를 작성하면 아래와 같다. 입력받은 요소 &#x3D; [-4, -3, -2, 1, 0, 1, 2, 2, 3] 0. 리턴받을 리스트를 생성한다. 1. 입력받은 요소를 오름차순정렬한다. 2. 입력받은 요소들을 검색사전으로 만들기위해 해쉬맵을 생성한다. 3. 해쉬맵의 키에" />
+    <meta name="twitter:url" content="https://blog.chulgil.me/leetcode-015-2/" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Chulgil.Lee" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="kr, CODE, ALGORITHM, LeetCode" />
+    <meta name="twitter:site" content="@chulgil_lee" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "CG.Lee Blog",
+        "logo": "https://static.ghost.org/v1.0.0/images/ghost-logo.svg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Chulgil.Lee",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/1c9a877c23005f203f834b78c457bd0e?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://blog.chulgil.me/author/chulgil/",
+        "sameAs": []
+    },
+    "headline": "[LeetCode] #015 Three Sum - Improve speed",
+    "url": "https://blog.chulgil.me/leetcode-015-2/",
+    "datePublished": "2019-01-29T19:01:57.000Z",
+    "dateModified": "2019-02-03T02:30:47.000Z",
+    "keywords": "kr, CODE, ALGORITHM, LeetCode",
+    "description": "이번 포스트에서는 지난번에 구현한 3Sum의 속도를 개선시킨 알고리즘을 설명한다. 알고리즘 설명은 이 링크에서 확인할 수 있다. 먼저 의사코드를 작성하면 아래와 같다. 입력받은 요소 &#x3D; [-4, -3, -2, 1, 0, 1, 2, 2, 3] 0. 리턴받을 리스트를 생성한다. 1. 입력받은 요소를 오름차순정렬한다. 2. 입력받은 요소들을 검색사전으로 만들기위해 해쉬맵을 생성한다. 3. 해쉬맵의 키에",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.chulgil.me/"
+    }
+}
+    </script>
+
+    <script src="../public/ghost-sdk.min.js?v=c64ad04006"></script>
+<script>
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "ff428a00f312"
+});
+</script>
+    <meta name="generator" content="Ghost 2.10" />
+    <link rel="alternate" type="application/rss+xml" title="CG.Lee Blog" href="../rss/" />
+    <meta name="google-site-verification" content="pf2yr6i36pchRwvZLtSf4yFa5azDi9OU65zbHs7DdbE" />
+<meta name="naver-site-verification" content="c38d3651e8195007fd35924219e53b770141b3d7"/>
+	</head>
+	<body class="post-template tag-kr tag-code tag-algorithm tag-leetcode">
+		<div class="global-wrap">
+		<div class="site-wrap">
+			<div class="nav-mobile-icon">
+	<div class="hamburger hamburger-squeeze">
+		<div class="hamburger-box">
+			<div class="hamburger-inner"></div>
+		</div>
+	</div>
+</div>
+<div class="nav-mobile-wrap">
+	<nav class="nav-mobile-list">
+		<ul>
+			<li class="home  nav-mobile-item"><a href="../">Home</a></li>
+<li class="code  nav-mobile-item"><a href="../tag/code/">CODE</a></li>
+<li class="life  nav-mobile-item"><a href="../tag/life/">LIFE</a></li>
+<li class="tip  nav-mobile-item"><a href="../tag/tip/">TIP</a></li>
+<li class="esl  nav-mobile-item"><a href="https://esl.chulgil.me/">ESL</a></li>
+<li class="author  nav-mobile-item"><a href="https://chulgil.me">Author</a></li>
+
+			<li class="nav-mobile-item search-open-mobile"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.420346,15.5800244 L24,21.1596784 L21.1596784,24 L15.5800244,18.420346 C13.9925104,19.4717887 12.088789,20.0841064 10.0420532,20.0841064 C4.49598037,20.0841064 0,15.5881261 0,10.0420532 C0,4.49598037 4.49598037,0 10.0420532,0 C15.5881261,0 20.0841064,4.49598037 20.0841064,10.0420532 C20.0841064,12.088789 19.4717887,13.9925104 18.420346,15.5800244 Z M10.0420532,16.0672851 C13.3696969,16.0672851 16.0672851,13.3696969 16.0672851,10.0420532 C16.0672851,6.71440951 13.3696969,4.01682129 10.0420532,4.01682129 C6.71440951,4.01682129 4.01682129,6.71440951 4.01682129,10.0420532 C4.01682129,13.3696969 6.71440951,16.0672851 10.0420532,16.0672851 Z"/></svg><span>Search</span></li>		</ul>
+	</nav>
+</div>			<header class="header-wrap">
+	<div class="logo headroom-logo">
+		<div class="table">
+			<a class="image" href="../"><img src="https://static.ghost.org/v1.0.0/images/ghost-logo.svg" alt="CG.Lee Blog"></a>
+
+		</div>
+	</div>
+</header>
+<div class="description">Thoughts, stories and ideas.</div>
+			<nav class ="nav-wrap">
+				<ul>
+					<li class="search-open"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.420346,15.5800244 L24,21.1596784 L21.1596784,24 L15.5800244,18.420346 C13.9925104,19.4717887 12.088789,20.0841064 10.0420532,20.0841064 C4.49598037,20.0841064 0,15.5881261 0,10.0420532 C0,4.49598037 4.49598037,0 10.0420532,0 C15.5881261,0 20.0841064,4.49598037 20.0841064,10.0420532 C20.0841064,12.088789 19.4717887,13.9925104 18.420346,15.5800244 Z M10.0420532,16.0672851 C13.3696969,16.0672851 16.0672851,13.3696969 16.0672851,10.0420532 C16.0672851,6.71440951 13.3696969,4.01682129 10.0420532,4.01682129 C6.71440951,4.01682129 4.01682129,6.71440951 4.01682129,10.0420532 C4.01682129,13.3696969 6.71440951,16.0672851 10.0420532,16.0672851 Z"/></svg></li>					<li class="home  nav-mobile-item"><a href="../">Home</a></li>
+<li class="code  nav-mobile-item"><a href="../tag/code/">CODE</a></li>
+<li class="life  nav-mobile-item"><a href="../tag/life/">LIFE</a></li>
+<li class="tip  nav-mobile-item"><a href="../tag/tip/">TIP</a></li>
+<li class="esl  nav-mobile-item"><a href="https://esl.chulgil.me/">ESL</a></li>
+<li class="author  nav-mobile-item"><a href="https://chulgil.me">Author</a></li>
+
+				</ul>
+			</nav>
+			<div class="post-wrap">
+	<div class="post-content-wrap no-image">
+		<div class="post-header">
+			<h1 class="post-title">[LeetCode] #015 Three Sum - Improve speed</h1>
+			<div class="item-meta post">
+					<a href="../author/chulgil/" class="author-image item-image" style="background-image: url(https://www.gravatar.com/avatar/1c9a877c23005f203f834b78c457bd0e?s&)"></a>
+					<a href="../author/chulgil/">Chulgil.Lee</a>
+					<br>
+				<time datetime="2019-01-29"> Published 13 days ago</time>
+			</div>
+		</div>
+		<div class="post-content">
+			<p>이번 포스트에서는 <a href="../leetcode-015.1">지난번에 구현한 3Sum</a>의 속도를 개선시킨 알고리즘을 설명한다.</p>
+<p>알고리즘 설명은 <a href="../leetcode-015.1">이 링크</a>에서 확인할 수 있다.</p>
+<h3 id="">먼저 의사코드를 작성하면 아래와 같다.</h3>
+<pre><code>입력받은 요소 = [-4, -3, -2, 1, 0, 1, 2, 2, 3]
+
+0. 리턴받을 리스트를 생성한다.
+1. 입력받은 요소를 오름차순정렬한다.
+2. 입력받은 요소들을 검색사전으로 만들기위해 해쉬맵을 생성한다.
+3. 해쉬맵의 키에 입력받은 요소들을 담고 값에는 중복되는 값을 카운트한다.
+   ex [-2,-1,0,0]:) hashmap[-2] = 1, hashmap[-1] = 1, hashmap[0] = 2
+3. 검색사전의 키값중 0의 값이 2개 이상이라면 리스트에 [0,0,0]을 추가한다.
+4. 검색사전으로 음수 집합 리스트를 생성한다.
+5. 검색사전으로 양수 집합 리스트를 생성한다.
+6. 음수 집합 리스트를 순환한다.
+    7. 양수 집합 리스트를 순환한다.
+        8.  음수요소와 양수요소를 더한 값을 합계에 설정하고 부호를 반전시킨다.
+        9.  검색사전에 합계가 존재하지 않으면 루프를 건너뛴다.
+        10. 다음 경우에 수에 해당하는 리스트를 추가한다.
+            [음의요소, 합계, 양의요소] 합계가 0인 경우
+            [합계, 음의요소, 양의요소] 합계가 음의요소보다 작을경우
+            [음의요소, 양의요소, 합계] 합계가 양의요소보다 클경우
+            [음의요소, 음의요소, 양의요소] 합계가 음의요소와 같고 요소가 1개이상인경우
+            [양의요소, 양의요소, 음의요소] 합계가 양의요소와 같고 요소가 1개 이상인경우
+11. 리스트를 반환한다.
+</code></pre>
+<h3 id="">코드로 구현하기 (파이썬)</h3>
+<pre><code>class Solution:
+    def threeSum(self, nums):
+        res = []
+        nums.sort()
+        lookup = dict()
+        for num in nums:
+            if num in lookup: lookup[num] += 1
+            else: lookup[num] = 1
+    
+        if 0 in lookup and lookup[0] &gt; 2: res.append([0,0,0])
+        neg = [n for n in lookup if n &lt; 0]
+        pos = [n for n in lookup if n &gt; 0]
+        for n in neg:
+            for p in pos:
+                sum = -p - n
+                if sum not in lookup: continue
+                if sum == 0: res.append([n,sum,p])
+                elif sum &lt; n: res.append([sum,n,p])
+                elif sum &gt; p: res.append([n,p,sum])
+                elif sum == n and lookup[sum] &gt; 1: res.append([n,n,p])
+                elif sum == p and lookup[sum] &gt; 1: res.append([n,p,p])
+        return res
+</code></pre>
+<p>이 알고리즘의 경우또한 O(n^2)로 시간복잡도가 전과 같지만 이미 계산된 결과값을 해시테이블에서 찾기때문에 속도가 빠르다. 실행시켜보면 313개의 테스트를 통과하고 런타임시간이 320 ms로 전보다 약 5배정도 빨라진 것을 확인 할 수 있다.</p>
+<h3 id="3sum-closet-"><a href="../leetcode-016/">3Sum Closet 문제 보러가기</a><br></h3>
+			<div class="post-meta">
+				<div class="left">
+					<div class="post-share">
+	<a href="https://twitter.com/intent/tweet?text=%5BLeetCode%5D%20%23015%20Three%20Sum%20-%20Improve%20speed&amp;url=https://blog.chulgil.me/leetcode-015-2/"
+	onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;"><i class="twitter"></i>
+	</a><a href="https://www.facebook.com/sharer/sharer.php?u=https://blog.chulgil.me/leetcode-015-2/"
+	onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><i class="facebook"></i>
+	</a><a href="https://plus.google.com/share?url=https://blog.chulgil.me/leetcode-015-2/"
+	onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;"><i class="google-plus"></i></a>
+</div>				</div>
+				<div class="right">
+					Tags: <a href="../tag/kr/">kr</a>, <a href="../tag/code/">CODE</a>, <a href="../tag/algorithm/">ALGORITHM</a>, <a href="../tag/leetcode/">LeetCode</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="related-posts-wrap is-related-posts">
+    <div class="related-title">Related articles</div>
+    <section class="related-post post tag-kr tag-code tag-algorithm tag-leetcode no-image">
+        <div class="related-post-title">
+            <h3><a href="../leetcode-263/">[LeetCode] #263 - Ugly Number</a>
+            </h3>
+        </div>
+        <div class="related-post-author">
+            <a href="../author/chulgil/">Chulgil.Lee</a><br>
+        </div>   
+    </section>
+    
+    <section class="related-post post tag-kr tag-code tag-algorithm tag-leetcode no-image">
+        <div class="related-post-title">
+            <h3><a href="../leetcode-016/">[LeetCode] #16 - 3Sum Closest</a>
+            </h3>
+        </div>
+        <div class="related-post-author">
+            <a href="../author/chulgil/">Chulgil.Lee</a><br>
+        </div>   
+    </section>
+    
+    <section class="related-post post tag-kr tag-code tag-algorithm tag-leetcode no-image">
+        <div class="related-post-title">
+            <h3><a href="../leetcode-015.1">[LeetCode] #015 Three Sum</a>
+            </h3>
+        </div>
+        <div class="related-post-author">
+            <a href="../author/chulgil/">Chulgil.Lee</a><br>
+        </div>   
+    </section>
+</div>
+<div class="pagination-wrap" role="navigation">
+	<a class="newer-posts" href="../leetcode-016/">Newer Article</a>
+	<hr>
+	<a class="older-posts" href="../leetcode-015.1">Older Article</a>
+</div><div class="disqus"></div>
+
+		</div>
+		<footer class="footer-wrap">
+	<div class="footer-social">
+		<a href="https://www.facebook.com/chulgil2"><i class="facebook"></i></a>
+		<a href="https://twitter.com/chulgil_lee"><i class="twitter"></i></a>
+			</div>
+	<div class="footer-copyright">
+		Copyright &copy; 2019, <a href="../">CG.Lee Blog</a>. All Right Reserved.
+		<br>
+		Published with <a href="https://ghost.org">Ghost</a>.
+	</div>
+</footer>	</div>
+		<div class="section-search flex">
+	<div class="search-close"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.4285714,12 L24,20.5714286 L20.5714286,24 L12,15.4285714 L3.42857143,24 L3.55271368e-15,20.5714286 L8.57142857,12 L5.32907052e-15,3.42857143 L3.42857143,3.55271368e-15 L12,8.57142857 L20.5714286,3.55271368e-15 L24,3.42857143 L15.4285714,12 Z"/></svg></div>
+	<div class="search-image" style="background-image: url(../content/images/2019/01/life-1.png)">
+	</div>
+	<div class="search-wrap">
+		<div class="search-content">
+			<form class="search-form flex" onsubmit="return false">
+				<input type="text" class="search-input" placeholder="Type your keywords..." autofocus>
+			</form>
+			<div class="search-meta">
+				<span class="search-info-wrap">Please enter at least 3 characters</span>
+				<span class="search-counter-wrap hide">
+					<span class="counter-results">0</span>
+				Results for your search</span>
+			</div>
+			<div class="search-results">
+			</div>
+			<div class="search-suggestion flex">
+				<div class="search-suggestion-tags">
+	<h3>May we suggest a tag?</h3>
+	<a class="post-tag global-tag" href="../tag/kr/">kr</a>
+	<a class="post-tag global-tag" href="../tag/tip/">TIP</a>
+	<a class="post-tag global-tag" href="../tag/blog/">BLOG</a>
+	<a class="post-tag global-tag" href="../tag/code/">CODE</a>
+	<a class="post-tag global-tag" href="../tag/algorithm/">ALGORITHM</a>
+	<a class="post-tag global-tag" href="../tag/leetcode/">LeetCode</a>
+	<a class="post-tag global-tag" href="../tag/life/">LIFE</a>
+	<a class="post-tag global-tag" href="../tag/db/">DB</a>
+	<a class="post-tag global-tag" href="../tag/mac/">MAC</a>
+	<a class="post-tag global-tag" href="../tag/glossary/">GLOSSARY</a>
+</div>
+				<div class="search-suggestion-authors">
+	<h3>May we suggest an author?</h3>
+	<a class="post-tag global-tag" href="../author/chulgil/">Chulgil.Lee</a>
+	<a class="post-tag global-tag" href="../author/ghost/">Ghost</a>
+</div>
+			</div>
+		</div>
+		<div class="search-footer">
+			<a href="../">CG.Lee Blog.</a>
+			<span>Thoughts, stories and ideas.</span>
+		</div>
+	</div>
+</div>
+<script>
+		var searchPublished = 'Published';
+		var searchFeaturedIcon = '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.9712403,8.05987765 L16.2291373,8.05987765 L12.796794,0.459688839 C12.5516266,-0.153229613 11.4483734,-0.153229613 11.0806223,0.459688839 L7.64827899,8.05987765 L0.906176009,8.05987765 C0.538424938,8.05987765 0.170673866,8.30504503 0.0480901758,8.6727961 C-0.0744935148,9.04054717 0.0480901758,9.40829825 0.293257557,9.65346563 L5.31918887,14.3116459 L3.11268244,22.4021694 C2.99009875,22.7699205 3.11268244,23.1376716 3.48043351,23.382839 C3.72560089,23.6280063 4.21593565,23.6280063 4.46110303,23.5054227 L11.9387082,19.2149935 L19.4163133,23.5054227 C19.538897,23.6280063 19.6614807,23.6280063 19.906648,23.6280063 C20.1518154,23.6280063 20.2743991,23.5054227 20.5195665,23.382839 C20.7647339,23.1376716 20.8873176,22.7699205 20.8873176,22.4021694 L18.6808111,14.3116459 L23.7067424,9.65346563 C23.9519098,9.40829825 24.0744935,9.04054717 23.9519098,8.6727961 C23.7067424,8.30504503 23.3389914,8.05987765 22.9712403,8.05987765 Z"/></svg>';
+</script>
+		<script src="../assets/js/global.js?v=c64ad04006"></script>
+		<script src="../assets/js/post.js?v=c64ad04006"></script>
+		<script>var options={scriptUrl:"//cglee-blog.disqus.com/embed.js",laziness:1,throttle:250,disqusConfig:function(){this.page.identifier="5c4f81c98db38e0001045158"}};disqusLoader(".disqus",options);</script>
+		<script src="../assets/js/global-search.js?v=c64ad04006"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-132271510-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-132271510-2');
+</script>
+<script>
+document.body.ondragstart = function () { return false };
+$('a').each(function() {
+	var a = new RegExp('/' + window.location.host + '/');
+	if(!a.test(this.href)) {
+       	$(this).click(function(event) {
+            event.preventDefault();
+           	event.stopPropagation();
+           	window.open(this.href, '_blank');
+      	});
+  	 }
+});
+</script>
+	</body>
+</html>

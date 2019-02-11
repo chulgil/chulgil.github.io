@@ -1,0 +1,27 @@
+/*
+ * Koenig Editor - Gallery
+ * ------------
+ */
+var images=document.querySelectorAll(".kg-gallery-image img");images.forEach(function(e){var a=e.closest(".kg-gallery-image"),t=e.attributes.width.value/e.attributes.height.value;a.style.flex=t+" 1 0%"});
+/*
+ * DisqusLoader
+ * ------------
+ * Version : 1.0.0
+ * Repo    : github.com/osvaldasvalutis/disqusLoader.js
+ * Author  : Osvaldas Valutis (@osvaldasvalutis)
+ * License : MIT
+ */
+!function(t,e,n){"use strict";var o=function(t,e){var n,o={};for(n in t)Object.prototype.hasOwnProperty.call(t,n)&&(o[n]=t[n]);for(n in e)Object.prototype.hasOwnProperty.call(e,n)&&(o[n]=e[n]);return o},r=function(t){var n=t.getBoundingClientRect();return{top:n.top+e.body.scrollTop,left:n.left+e.body.scrollLeft}},i=function(t,n){var o=e.createElement("script");o.src=t,o.async=!0,o.setAttribute("data-timestamp",+new Date),o.addEventListener("load",function(){"function"==typeof n&&n()}),(e.head||e.body).appendChild(o)},d=function(t,e){var n,o;return function(){var r=this,i=arguments,d=+new Date;n&&d<n+t?(clearTimeout(o),o=setTimeout(function(){n=d,e.apply(r,i)},t)):(n=d,e.apply(r,i))}},s=!1,a=!1,u=!1,l=!1,c="unloaded",f=!1,p=function(){if(!f||!e.body.contains(f)||"loaded"==f.disqusLoaderStatus)return!0;var n=t.pageYOffset,o=r(f).top;if(o-n>t.innerHeight*a||n-o-f.offsetHeight-t.innerHeight*a>0)return!0;var d=e.getElementById("disqus_thread");d&&d.removeAttribute("id"),f.setAttribute("id","disqus_thread"),f.disqusLoaderStatus="loaded","loaded"==c?DISQUS.reset({reload:!0,config:u}):(t.disqus_config=u,"unloaded"==c&&(c="loading",i(l,function(){c="loaded"})))};t.addEventListener("scroll",d(s,p)),t.addEventListener("resize",d(s,p)),t.disqusLoader=function(t,n){n=o({laziness:1,throttle:250,scriptUrl:!1,disqusConfig:!1},n),a=n.laziness+1,s=n.throttle,u=n.disqusConfig,l=!1===l?n.scriptUrl:l,(f="string"==typeof t?e.querySelector(t):"number"==typeof t.length?t[0]:t).disqusLoaderStatus="unloaded",p()}}(window,document);
+/*
+ * Reframe
+ * ------------
+ * Version : 2.1.14
+ * Website : dollarshaveclub.github.io/reframe.js
+ * Repo    : github.com/dollarshaveclub/reframe.js
+ * Author  : Jeff Wainwright (@yowainwright)
+ * License : MIT
+ */
+!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):e.reframe=t()}(this,function(){"use strict";return function(e,t){var i="string"==typeof e?document.querySelectorAll(e):e,n=t||"js-reframe";"length"in i||(i=[i]);for(var o=0;o<i.length;o+=1){var r=i[o];if(-1!==r.className.split(" ").indexOf(n))return;var f=r.offsetHeight/r.offsetWidth*100,d=document.createElement("div");d.className=n;var a=d.style;a.position="relative",a.width="100%",a.paddingTop=f+"%";var s=r.style;s.position="absolute",s.width="100%",s.height="100%",s.left="0",s.top="0",r.parentNode.insertBefore(d,r),r.parentNode.removeChild(r),d.appendChild(r)}}});
+
+/* Custom settings for Reframe */
+reframe('.kg-embed-card iframe, .post-wrap iframe');

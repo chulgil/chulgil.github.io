@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[DB - CG.Lee Blog]]></title><description><![CDATA[Thoughts, stories and ideas.]]></description><link>https://blog.chulgil.me/</link><image><url>https://blog.chulgil.me/favicon.png</url><title>DB - CG.Lee Blog</title><link>https://blog.chulgil.me/</link></image><generator>Ghost 2.10</generator><lastBuildDate>Mon, 11 Feb 2019 19:29:10 GMT</lastBuildDate><atom:link href="https://blog.chulgil.me/tag/db/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[AWS RDS MySQL프로시저 권한문제해결하기]]></title><description><![CDATA[<figure class="kg-card kg-image-card"><img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ" class="kg-image"><figcaption>Photo by <a href="https://unsplash.com/@campaign_creators?utm_source=ghost&utm_medium=referral&utm_campaign=api-credit">Campaign Creators</a> / <a href="https://unsplash.com/?utm_source=ghost&utm_medium=referral&utm_campaign=api-credit">Unsplash</a></figcaption></figure><hr><p>아마존 RDS를 사용중이라면 MySQL 프로시저 생성하려 할때 아래와 같은 권한에러가 발생하게 된다.<br>
+디폴트로 SUPER권한이 부여되지 않기 때문인데 해결방법을 공유한다.</p>
+<pre><code>Access denied; you need (at least one of) the SUPER privilege(s) for this operation
+</code></pre>
+<ol>
+<li>RDS메뉴에서 Prameter Groups을 클릭</li>
+<li>log_bin_trust_function_creators 값을 0</li></ol>]]></description><link>https://blog.chulgil.me/how-to-use-procedure-in-aws-mysql/</link><guid isPermaLink="false">5c3e599e19a31400017ce8bb</guid><category><![CDATA[kr]]></category><category><![CDATA[DB]]></category><dc:creator><![CDATA[Chulgil.Lee]]></dc:creator><pubDate>Sun, 20 Jan 2019 02:59:22 GMT</pubDate><content:encoded><![CDATA[<figure class="kg-card kg-image-card"><img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjExNzczfQ" class="kg-image"><figcaption>Photo by <a href="https://unsplash.com/@campaign_creators?utm_source=ghost&utm_medium=referral&utm_campaign=api-credit">Campaign Creators</a> / <a href="https://unsplash.com/?utm_source=ghost&utm_medium=referral&utm_campaign=api-credit">Unsplash</a></figcaption></figure><hr><p>아마존 RDS를 사용중이라면 MySQL 프로시저 생성하려 할때 아래와 같은 권한에러가 발생하게 된다.<br>
+디폴트로 SUPER권한이 부여되지 않기 때문인데 해결방법을 공유한다.</p>
+<pre><code>Access denied; you need (at least one of) the SUPER privilege(s) for this operation
+</code></pre>
+<ol>
+<li>RDS메뉴에서 Prameter Groups을 클릭</li>
+<li>log_bin_trust_function_creators 값을 0 -&gt; 1 로 변경</li>
+</ol>
+<p>저장하면 유저가 생성한 데이터베이스에 관해서는 super권한이 적용되기 때문에 프로시저를 실행할 수 있다.</p>
+<hr><p>만약 다음과 같은 에러로 Prameter Groups이 수정이 안될경우는 사용자 파라미터를 추가한후 진행하면 된다.<br>
+디비를 처음 생성할때 만들어지는 디폴트 파라미터그룹은 수정이 불가하다.</p>
+<pre><code>Cannot modify a default parameter group. 
+(Service: AmazonRDS; Status Code: 400; 
+Error Code: InvalidParameterValue; 
+Request ID: f75b675b-b9bf-42a5-b630-c4f1f8da6da5)
+</code></pre>
+]]></content:encoded></item></channel></rss>

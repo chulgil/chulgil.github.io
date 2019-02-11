@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>토큰기반 인증 파헤치기(AngularJS &amp; Node.js )</title>
+		<meta name="HandheldFriendly" content="True">
+		<meta name="MobileOptimized" content="320">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400i&amp;subset=latin-ext" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../assets/css/normalize.css?v=c64ad04006">
+		<link rel="stylesheet" type="text/css" href="../assets/css/icons.css?v=c64ad04006">
+		<link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=c64ad04006">
+		<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="amp/" />
+    
+    <meta property="og:site_name" content="CG.Lee Blog" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="토큰기반 인증 파헤치기(AngularJS &amp; Node.js )" />
+    <meta property="og:description" content="토큰 기반 인증 시스템을 설명하기 전에, 먼저 전통적인 인증 시스템을 살펴보자. 사용자는 username과 password를 로그인 폼에 입력하고 Login 버튼을 클릭한다. 서버는 요청이 들어오면 DB를 쿼리하여 user를 검증한다. 만약 요청이 유효하면 세션을 생성하고 세션 정보를 Response 헤더에 포함시켜 반환한다. 클라이언트는 제한된 end points에 접근할 때 모든 Request Header에 세션 정보를 포함시킨다." />
+    <meta property="og:url" content="https://blog.chulgil.me/token-based-authentication-with-angularjs/" />
+    <meta property="article:published_time" content="2019-02-05T10:00:00.000Z" />
+    <meta property="article:modified_time" content="2019-02-05T10:00:00.000Z" />
+    <meta property="article:tag" content="kr" />
+    <meta property="article:tag" content="CODE" />
+    <meta property="article:tag" content="TIP" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/chulgil2" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="토큰기반 인증 파헤치기(AngularJS &amp; Node.js )" />
+    <meta name="twitter:description" content="토큰 기반 인증 시스템을 설명하기 전에, 먼저 전통적인 인증 시스템을 살펴보자. 사용자는 username과 password를 로그인 폼에 입력하고 Login 버튼을 클릭한다. 서버는 요청이 들어오면 DB를 쿼리하여 user를 검증한다. 만약 요청이 유효하면 세션을 생성하고 세션 정보를 Response 헤더에 포함시켜 반환한다. 클라이언트는 제한된 end points에 접근할 때 모든 Request Header에 세션 정보를 포함시킨다." />
+    <meta name="twitter:url" content="https://blog.chulgil.me/token-based-authentication-with-angularjs/" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Chulgil.Lee" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="kr, CODE, TIP" />
+    <meta name="twitter:site" content="@chulgil_lee" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "CG.Lee Blog",
+        "logo": "https://static.ghost.org/v1.0.0/images/ghost-logo.svg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Chulgil.Lee",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/1c9a877c23005f203f834b78c457bd0e?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://blog.chulgil.me/author/chulgil/",
+        "sameAs": []
+    },
+    "headline": "토큰기반 인증 파헤치기(AngularJS &amp; Node.js )",
+    "url": "https://blog.chulgil.me/token-based-authentication-with-angularjs/",
+    "datePublished": "2019-02-05T10:00:00.000Z",
+    "dateModified": "2019-02-05T10:00:00.000Z",
+    "keywords": "kr, CODE, TIP",
+    "description": "토큰 기반 인증 시스템을 설명하기 전에, 먼저 전통적인 인증 시스템을 살펴보자. 사용자는 username과 password를 로그인 폼에 입력하고 Login 버튼을 클릭한다. 서버는 요청이 들어오면 DB를 쿼리하여 user를 검증한다. 만약 요청이 유효하면 세션을 생성하고 세션 정보를 Response 헤더에 포함시켜 반환한다. 클라이언트는 제한된 end points에 접근할 때 모든 Request Header에 세션 정보를 포함시킨다.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.chulgil.me/"
+    }
+}
+    </script>
+
+    <script src="../public/ghost-sdk.min.js?v=c64ad04006"></script>
+<script>
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "ff428a00f312"
+});
+</script>
+    <meta name="generator" content="Ghost 2.10" />
+    <link rel="alternate" type="application/rss+xml" title="CG.Lee Blog" href="../rss/" />
+    <meta name="google-site-verification" content="pf2yr6i36pchRwvZLtSf4yFa5azDi9OU65zbHs7DdbE" />
+<meta name="naver-site-verification" content="c38d3651e8195007fd35924219e53b770141b3d7"/>
+	</head>
+	<body class="post-template tag-kr tag-code tag-tip">
+		<div class="global-wrap">
+		<div class="site-wrap">
+			<div class="nav-mobile-icon">
+	<div class="hamburger hamburger-squeeze">
+		<div class="hamburger-box">
+			<div class="hamburger-inner"></div>
+		</div>
+	</div>
+</div>
+<div class="nav-mobile-wrap">
+	<nav class="nav-mobile-list">
+		<ul>
+			<li class="home  nav-mobile-item"><a href="../">Home</a></li>
+<li class="code  nav-mobile-item"><a href="../tag/code/">CODE</a></li>
+<li class="life  nav-mobile-item"><a href="../tag/life/">LIFE</a></li>
+<li class="tip  nav-mobile-item"><a href="../tag/tip/">TIP</a></li>
+<li class="esl  nav-mobile-item"><a href="https://esl.chulgil.me/">ESL</a></li>
+<li class="author  nav-mobile-item"><a href="https://chulgil.me">Author</a></li>
+
+			<li class="nav-mobile-item search-open-mobile"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.420346,15.5800244 L24,21.1596784 L21.1596784,24 L15.5800244,18.420346 C13.9925104,19.4717887 12.088789,20.0841064 10.0420532,20.0841064 C4.49598037,20.0841064 0,15.5881261 0,10.0420532 C0,4.49598037 4.49598037,0 10.0420532,0 C15.5881261,0 20.0841064,4.49598037 20.0841064,10.0420532 C20.0841064,12.088789 19.4717887,13.9925104 18.420346,15.5800244 Z M10.0420532,16.0672851 C13.3696969,16.0672851 16.0672851,13.3696969 16.0672851,10.0420532 C16.0672851,6.71440951 13.3696969,4.01682129 10.0420532,4.01682129 C6.71440951,4.01682129 4.01682129,6.71440951 4.01682129,10.0420532 C4.01682129,13.3696969 6.71440951,16.0672851 10.0420532,16.0672851 Z"/></svg><span>Search</span></li>		</ul>
+	</nav>
+</div>			<header class="header-wrap">
+	<div class="logo headroom-logo">
+		<div class="table">
+			<a class="image" href="../"><img src="https://static.ghost.org/v1.0.0/images/ghost-logo.svg" alt="CG.Lee Blog"></a>
+
+		</div>
+	</div>
+</header>
+<div class="description">Thoughts, stories and ideas.</div>
+			<nav class ="nav-wrap">
+				<ul>
+					<li class="search-open"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.420346,15.5800244 L24,21.1596784 L21.1596784,24 L15.5800244,18.420346 C13.9925104,19.4717887 12.088789,20.0841064 10.0420532,20.0841064 C4.49598037,20.0841064 0,15.5881261 0,10.0420532 C0,4.49598037 4.49598037,0 10.0420532,0 C15.5881261,0 20.0841064,4.49598037 20.0841064,10.0420532 C20.0841064,12.088789 19.4717887,13.9925104 18.420346,15.5800244 Z M10.0420532,16.0672851 C13.3696969,16.0672851 16.0672851,13.3696969 16.0672851,10.0420532 C16.0672851,6.71440951 13.3696969,4.01682129 10.0420532,4.01682129 C6.71440951,4.01682129 4.01682129,6.71440951 4.01682129,10.0420532 C4.01682129,13.3696969 6.71440951,16.0672851 10.0420532,16.0672851 Z"/></svg></li>					<li class="home  nav-mobile-item"><a href="../">Home</a></li>
+<li class="code  nav-mobile-item"><a href="../tag/code/">CODE</a></li>
+<li class="life  nav-mobile-item"><a href="../tag/life/">LIFE</a></li>
+<li class="tip  nav-mobile-item"><a href="../tag/tip/">TIP</a></li>
+<li class="esl  nav-mobile-item"><a href="https://esl.chulgil.me/">ESL</a></li>
+<li class="author  nav-mobile-item"><a href="https://chulgil.me">Author</a></li>
+
+				</ul>
+			</nav>
+			<div class="post-wrap">
+	<div class="post-content-wrap no-image">
+		<div class="post-header">
+			<h1 class="post-title">토큰기반 인증 파헤치기(AngularJS &amp; Node.js )</h1>
+			<div class="item-meta post">
+					<a href="../author/chulgil/" class="author-image item-image" style="background-image: url(https://www.gravatar.com/avatar/1c9a877c23005f203f834b78c457bd0e?s&)"></a>
+					<a href="../author/chulgil/">Chulgil.Lee</a>
+					<br>
+				<time datetime="2019-02-05"> Published 6 days ago</time>
+			</div>
+		</div>
+		<div class="post-content">
+			<hr>
+<h3 id="">토큰 기반 인증 시스템을 설명하기 전에, 먼저 전통적인 인증 시스템을 살펴보자.</h3>
+<p><img src="../content/images/2019/02/token.png" alt="token"></p>
+<ol>
+<li>사용자는 username과 password를 로그인 폼에 입력하고 Login 버튼을 클릭한다.</li>
+<li>서버는 요청이 들어오면 DB를 쿼리하여 user를 검증한다. 만약 요청이 유효하면 세션을 생성하고 세션 정보를 Response 헤더에 포함시켜 반환한다.</li>
+<li>클라이언트는 제한된 end points에 접근할 때 모든 Request Header에 세션 정보를 포함시킨다.</li>
+<li>만약 세션 정보가 유효하면 서버는 사용자가 특정 end point에 접근하는 것을 허용하고 렌더링된 HTML 내용을 반환한다.</li>
+</ol>
+<p>여기까지는 문제가 없다. 웹 어플리케이션은 잘 동작하고, 사용자 인증을 거쳐서 특정 endpoint로의 접근을 제한할 수 있다. 하지만 안드로이드와 같은 다른 클라이언트에서 동작하는 어플리케이션을 만들고 싶다면 어떨까? 전통적인 인증 방식으로 동작하는 어플리케이션을 모바일 클라이언트에서도 동일하게 사용할 수 있을까? 그렇지 않다. 그 이유는 다음과 같다.</p>
+<ol>
+<li>세션과 쿠키는 모바일 어플리케이션에서 make sense하지 않다. 서버에서 생성된 세션과 쿠키를 모바일 클라이언트에서는 공유할 수 없다.</li>
+<li>현재 어플리케이션에서 렌더링된 HTML이 반환되었다. 모바일 클라이언트에서는 JSON 또는 XML와 같은 포맷의 응답이 필요하다.<br>
+이러한 경우 클라이언트 독립적인 어플리케이션 이 필요하다.</li>
+</ol>
+<p>So, what is this JWT?</p>
+<hr>
+<h3 id="jwt">JWT</h3>
+<p>JWT는 JSON Web Token의 약자이며 인증 헤더 내에서 사용되는 토큰 포맷이다. 이 토큰은 두 개의 시스템끼리 안전한 방법으로 통신할 수 있도록 설계하는 것을 도와준다. 이 튜토리얼에서는 JWT를 &quot;Bearer 토큰&quot;으로 부르도록 하겠다. Bearer 토큰은 3가지 요소로 구성된다 : Header, Payload, Signature.</p>
+<p>Header는 토큰 타입과 암호화 방법을 보관하는 토큰의 한 부분이며, Base-64로 인코딩된다.<br>
+Payload에는 유저 정보, 상품 정보 등의 다양한 종류의 정보를 넣을 수 있다. Base-64로 인코딩된다.<br>
+Signature는 Header, Payload, Secret key의 조합이다. Secret key는 반드시 서버에 안전하게 보관되어야 한다.</p>
+<p>JTW의 장점은 계정 서버와 API 서버가 분리되어 있을 때, API 서버가 계정 서버에게 토큰의 유효성 여부를 물어보지 않고도 스스로 판단할 수 있다는 것이다.</p>
+<p>JWT 스키마와 토큰 예제는 아래와 같다.</p>
+<p><img src="../content/images/2019/02/token2.png" alt="token2"></p>
+<p>몇가지 언어에서 이미 구현되어 있기 때문에 Bearer 토큰을 생성하는 코드를 직접 구현할 필요는 없다.</p>
+<pre><code>###### Language Livbary URL 
+
+ - NodeJS : http://github.com/auth0/node-jsonwebtoken  
+ - PHP : http://github.com/firebase/php-jwt  
+ - Java : http://github.com/auth0/java-jwt  
+ - Ruby : http://github.com/progrium/ruby-jwt  
+ - .NET : http://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet  
+ - Python : http://github.com/progrium/pyjwt/  
+
+</code></pre>
+<hr>
+<h3 id="">예제 살펴보기</h3>
+<p>토큰 기반 인증에 대해 몇가지 기본 정보를 다뤘기 때문에 이제 연습 예제를 진행해보자. 아래 스키마를 잘 봐두길 바란다.</p>
+<p><img src="../content/images/2019/02/token3.png" alt="token3"></p>
+<ol>
+<li>API에 대한 요청은 여러 클라이언트에 의해 생성된다. (웹 어플리케이션, 모바일 클라이언트, ...)</li>
+<li>요청은 <a href="https://api.yourexampleapp.xn--com-rg8l">https://api.yourexampleapp.com과</a> 같은 서비스에게 전달된다. 많은 사람들이 어플리케이션을 사용하면 요청을 수행하기 위해 여러개의 서버가 필요할 것이다.</li>
+<li>여기서 가장 적합한 서버로 요청하기 위해 로드 밸런서가 사용된다. <a href="https://api.yourexamplapp.xn--com-ky7m580d">https://api.yourexamplapp.com으로</a> 요청 발생하면 먼저 로드 밸런서가 요청을 제어하고 특정 서버로 클라이언트를 redirect 시킨다.</li>
+<li>하나의 어플리케이션이 있고 이 어플리케이션은 여러 서버로 배치된다 (server-1, server-2, ..., server-n). 요청이 만들어질 때마다 백엔드 어플리케이션은 요청 헤더를 가로채서 인증 헤더 내의 토큰 정보를 추출해낸다. DB 쿼리는 이 토큰을 사용하여 만들어질 것이다. 만약 토큰이 유효하고 end point에 접근하기 위해 요구되는 권한을 갖고 있다면 문제없이 진행될 것이다. 만약 그렇지 않다면 403 응답 코드(forbidden status)를 반환할 것이다.</li>
+</ol>
+<hr>
+<h3 id="">토큰기반 인증의 장점</h3>
+<p>토큰 기반 인증은 심각한 문제들을 해결해주는 몇가지 이점을 갖는다. 그 중 일부는 아래와 같다.</p>
+<ul>
+<li>
+<p>클라이언트 독립적인 서비스. 토큰 기반 인증에서 토큰은 요청 헤더를 통해 전달된다. 이것은 stateless를 의미한다. HTTP 요청을 만들 수 있는 클라이언트라면 누구든지 서버로 요청을 보낼 수 있다.</p>
+</li>
+<li>
+<p>CDN. 대부분의 현재 웹 어플리케이션 내에서 view는 백엔드 상에서 렌더링되고 브라우저로 HTML이 반환된다. 프론트엔드의 로직이 백엔드 코드와 의존성이 있는 것이다. 이렇게 의존성이 생기면 몇가지 문제가 발생한다. 예를 들어, 프론트엔드 HTML, CSS, JS 등을 구현하는 디자인 에이전시와 함께 일을 한다고 가정해보자. 우리는 일부 렌더링 또는 생성 동작을 수행하기 위해 프론트엔드 코드를 가져와서 백엔드 코드에 통합시켜야 한다. 어쩌면 렌더링된 HTML 컨텐츠는 디자인 에이전시가 구현했던 것과 아주 많이 다를 것이다. 토큰 기반 인증에서는 프론트엔드 프로젝트를 백엔드로부터 독립적으로 개발하도록 할 수 있다. 백엔드 코드는 렌더링된 HTML 대신 JSON 응답을 반환할 것이고, 경량화되고 압축된 버전의 프론트엔드 코드는 CDN에 넣어둘 수가 있다. 누군가 웹페이지에 방문하면 HTML 컨텐츠는 CDN에서 제공되고 페이지의 내용은 인증 헤더의 토큰을 사용하는 API 서비스에 의해 생성될 것이다.</p>
+</li>
+<li>
+<p>No Cookie-Session (or NO CSRF). CSRF(사이트간 요청 위조)는 세션 유지에 일반적으로 사용되는 쿠키 정보만 만족하면 요청이 수행되는 취약점을 이용한 공격이다. 예를 들어, 이미 사이트에 로그인하여 쿠키를 들고 있는 사용자가 공격자가 유도한 링크(회원 탈퇴 링크)에 노출되면 회원 탈퇴 요청이 서버로 전달되고 탈퇴가 되어버린다. 이미 쿠키가 사용자 정보를 포함하고 있기 때문에 회원 탈퇴 요청 URL로 접속만하면 웹서버는 요청을 신뢰하고 명령을 수행하는 것이다. 이 문제를 해결하기 위해 탈퇴 시 비밀번호를 한번 더 요구하거나 요청에 토큰과 같은 credential을 포함하는 방법을 사용한다. 토큰 기반 인증에서 토큰은 인증 헤더 내에 포함되기 때문에 CSRF를 방지할 수 있다.</p>
+</li>
+<li>
+<p>지속적인 토큰 저장. 어플리케이션 내에서 세션 읽기, 쓰기, 삭제 동작이 발생하면 최소 1회 OS의 temp 폴더에 file 관련 동작이 발생한다. 여러개의 서버를 갖고 있고 한 세션이 첫번째 서버에 생성되었다고 해보자. 이 상태에서 새로운 요청이 발생하고 그 요청이 다른 서버에 전달되면, 해당 서버에는 세션 정보가 없을 것이기 때문에 &quot;unauthrized&quot; 응답을 받을 것이다. 물론 sticky 세션(처음에 접속했던 서버와 같은 서버에 계속 연결시키는 것)을 사용하여 이 문제를 해결할 수 있다. 하지만 토큰 기반 인증에서는 이 문제 자연스럽게 해결된다. 요청 토큰은 모든 요청, 모든 서버가 가로채기 때문이다.</p>
+</li>
+</ul>
+<p>이것들이 토큰 기반 인증의 가장 일반적인 장점이다. 이로써 이론적인 설명을 마치고 연습 예제를 보도록 하자.</p>
+<hr>
+<h3 id="2">토큰기반 인증을 시연하기위해 아래 2개의 어플리케이션 을 살펴보자.</h3>
+<ol>
+<li>token-based-auth-backend</li>
+<li>token-based-auth-frontend</li>
+</ol>
+<p>백엔드 프로젝트 예제에서는 서비스가 실행되고 서비스의 결과가 JSON 포맷으로 반환될 것이다. 서비스에서는 결코 view가 리턴되지 않는다. 프론트엔드 예제는 HTML을 위한 AngularJS 프로젝트이며, 프론트엔드 앱은 백엔드 서비스로 요청을 보내는 AngularJS 서비스에 의해 작성될 것이다.</p>
+<h4 id="tokenbasedauthbackend">token-based-auth-backend</h4>
+<pre><code>// mongoose를 사용하기 위해 해당 모듈을 import
+var mongoose    = require('mongoose'); 
+
+// 스키마 정의
+
+./models/Users.js
+// email, password, token 필드를 가지며 각각의 필드는 string 타입이다.
+var Schema       = mongoose.Schema;
+var UserSchema   = new Schema({
+    email: String,
+    password: String,
+    token: String
+});
+
+// 스키마를 이용해서 모델을 정의
+// 'User' : mongodb에 저장될 collection이름(테이블명)
+// UserSchema : 모델을 정의하는데 사용할 스키마
+module.exports = mongoose.model('User', UserSchema);
+</code></pre>
+<p>./server.js</p>
+<pre><code>// 필요한 모듈 import
+var express    = require(&quot;express&quot;);
+var morgan       = require(&quot;morgan&quot;);
+var bodyParser = require(&quot;body-parser&quot;);
+var jwt             = require(&quot;jsonwebtoken&quot;);
+var mongoose  = require(&quot;mongoose&quot;);
+var app           = express();
+
+var port = process.env.PORT || 3001;
+var User     = require('./models/User');
+
+// DB 연결
+mongoose.connect(process.env.MONGO_URL); //mongodb://localhost/dbname
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(morgan(&quot;dev&quot;)); // 모든 요청을 console에 기록
+app.use(methodOverride()); // DELETE, PUT method 사용
+app.use(function(req, res, next) {
+    //모든 도메인의 요청을 허용하지 않으면 웹브라우저에서 CORS 에러를 발생시킨다.
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+    next();
+});
+
+
+// 로그인
+// 다른 endpoint에 접근할 수 있는 토큰을 얻는다.
+app.post('/authenticate', function(req, res) {
+    User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
+        if (err) {
+            res.json({
+                type: false,
+                data: &quot;Error occured: &quot; + err
+            });
+        } else {
+            if (user) {
+               res.json({
+                    type: true,
+                    data: user,
+                    token: user.token
+                }); 
+            } else {
+                res.json({
+                    type: false,
+                    data: &quot;Incorrect email/password&quot;
+                });    
+            }
+        }
+    });
+});
+
+// 신규가입
+// 계정과 토큰을 생성한다.
+app.post('/signin', function(req, res) {
+    User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
+        if (err) {
+            res.json({
+                type: false,
+                data: &quot;Error occured: &quot; + err
+            });
+        } else {
+            if (user) {
+                res.json({
+                    type: false,
+                    data: &quot;User already exists!&quot;
+                });
+            } else {
+                var userModel = new User();
+                userModel.email = req.body.email;
+                userModel.password = req.body.password;
+                userModel.save(function(err, user) { // DB 저장 완료되면 콜백 함수 호출
+                    user.token = jwt.sign(user, process.env.JWT_SECRET); // user 정보로부터 토큰 생성
+                    user.save(function(err, user1) {
+                        res.json({
+                            type: true,
+                            data: user1,
+                            token: user1.token
+                        });
+                    });
+                })
+            }
+        }
+    });
+});
+
+// 나의 정보
+// 토큰 검사 후 계정 정보 반환
+// 토큰 추출하기 위해 ensureAuthorized 먼저 실행
+app.get('/me', ensureAuthorized, function(req, res) {
+    User.findOne({token: req.token}, function(err, user) {
+        if (err) {
+            res.json({
+                type: false,
+                data: &quot;Error occured: &quot; + err
+            });
+        } else {
+            res.json({
+                type: true,
+                data: user
+            });
+        }
+    });
+});
+
+// 요청 헤더 내의 authorization 헤더에서 토큰 추출
+// 토큰이 존재하면, 토큰을 req.token에 할당
+function ensureAuthorized(req, res, next) {
+    var bearerToken;
+    var bearerHeader = req.headers[&quot;authorization&quot;];
+    if (typeof bearerHeader !== 'undefined') {
+        var bearer = bearerHeader.split(&quot; &quot;);
+        bearerToken = bearer[1];
+        req.token = bearerToken;
+        next(); // 다음 콜백함수 진행
+    } else {
+        res.send(403);
+    }
+}
+
+process.on('uncaughtException', function(err) {
+    console.log(err);
+});
+
+// Start Server
+app.listen(port, function () {
+    console.log( &quot;Express server listening on port &quot; + port);
+});
+</code></pre>
+<h3 id="">결론</h3>
+<p>클라이언트 독립적인 서비스를 구현할 때 토큰 기반 인증/인가 방식은 인증 시스템을 구축하는데 많은 도움을 준다. 이 기술을 사용함으로써 서비스(또는 API) 개발에만 집중할 수 있다. 인증/인가 부분은 토큰 기반 인증 시스템에 의해 서비스의 앞단에서 하나의 '레이어'로써 핸들링될 것이다. 웹 브라우저, 안드로이드, iOS, 데스크탑 클라이언트 등 어떤 클라이언트를 통해서도 서비스에 접근하고 서비스를 사용할 수 있다.</p>
+<p>이 링크에서 튜토리얼을 확인할 수 있다.<br>
+<a href="http://token-based-auth.herokuapp.com/">working demo</a>.</p>
+<h3 id="">개선사항</h3>
+<ol>
+<li>비밀번호가 해쉬 암호화되어 저장되어야하고 로그인시 해쉬값을 전달받아 비교해야 한다.</li>
+</ol>
+<pre><code>// bcrypt 사용
+UserScheme.pre('save', function (callback) { 
+  // salt와 암호화된 비밀번호 생성
+  var user = this;
+  if (!user.isModified('password')) return next();
+ 
+  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+    if (err) return next(err);
+ 
+    bcrypt.hash(user.password, salt, function(err, hash) {
+        if (err) return next(err);
+        user.password = hash;
+        next();
+    });
+  });
+}
+
+// 비밀번호 검증
+UserSchema.methods.verifyPassword = function(password, cb) {    
+    bcrypt.compare(password, this.password, function(err, isMatch) {
+        if (err) return cb(err);
+        cb(isMatch);
+    });
+};
+
+// 로그인
+app.post('/authenticate', function(req, res) {
+...
+      user.comparePassword(password, function(isMatch) {
+          if (!isMatch) {
+              console.log(&quot;Attempt failed to login with &quot; + user.username);
+              return res.send(401);
+          }
+          ...
+      });
+...
+}
+</code></pre>
+<ol start="2">
+<li>토큰의 유효성 검사가 수행되어야 하며, 토큰이 만료되어야 한다.</li>
+</ol>
+<pre><code>function ensureAuthorized(req, res, next) {
+    ...
+    jwt.verify(bearerToken, process.env.JWT_SECRET)
+    ...
+}
+</code></pre>
+<p>위의 개선사항이 반영된 소스 :</p>
+<ul>
+<li><a href="http://thejackalofjavascript.com/architecting-a-restful-node-js-app/">http://thejackalofjavascript.com/architecting-a-restful-node-js-app/</a></li>
+<li><a href="http://www.kdelemme.com/2014/03/09/authentication-with-angularjs-and-a-node-js-rest-api/">http://www.kdelemme.com/2014/03/09/authentication-with-angularjs-and-a-node-js-rest-api/</a></li>
+</ul>
+<p>참고자료 :</p>
+<ol>
+<li><a href="http://bcho.tistory.com/999">REST JWT(JSON Web Token)소개</a></li>
+<li><a href="http://bcho.tistory.com/1005">MSA 아키텍쳐 구현을 위한 API 게이트웨이의 이해 (API GATEWAY)</a></li>
+<li><a href="https://velopert.com/2350">토큰기반인증소개</a></li>
+<li><a href="https://www.toptal.com/web/cookie-free-authentication-with-json-web-tokens-an-example-in-laravel-and-angularjs">Laravel&amp;Angularjs Login</a></li>
+</ol>
+
+			<div class="post-meta">
+				<div class="left">
+					<div class="post-share">
+	<a href="https://twitter.com/intent/tweet?text=%ED%86%A0%ED%81%B0%EA%B8%B0%EB%B0%98%20%EC%9D%B8%EC%A6%9D%20%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0(AngularJS%20%26%20Node.js%20)&amp;url=https://blog.chulgil.me/token-based-authentication-with-angularjs/"
+	onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;"><i class="twitter"></i>
+	</a><a href="https://www.facebook.com/sharer/sharer.php?u=https://blog.chulgil.me/token-based-authentication-with-angularjs/"
+	onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><i class="facebook"></i>
+	</a><a href="https://plus.google.com/share?url=https://blog.chulgil.me/token-based-authentication-with-angularjs/"
+	onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;"><i class="google-plus"></i></a>
+</div>				</div>
+				<div class="right">
+					Tags: <a href="../tag/kr/">kr</a>, <a href="../tag/code/">CODE</a>, <a href="../tag/tip/">TIP</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="related-posts-wrap is-related-posts">
+    <div class="related-title">Related articles</div>
+    <section class="related-post post tag-kr tag-code tag-algorithm tag-leetcode no-image">
+        <div class="related-post-title">
+            <h3><a href="../leetcode-263/">[LeetCode] #263 - Ugly Number</a>
+            </h3>
+        </div>
+        <div class="related-post-author">
+            <a href="../author/chulgil/">Chulgil.Lee</a><br>
+        </div>   
+    </section>
+    
+    <section class="related-post post tag-kr tag-code tag-algorithm tag-leetcode no-image">
+        <div class="related-post-title">
+            <h3><a href="../leetcode-016/">[LeetCode] #16 - 3Sum Closest</a>
+            </h3>
+        </div>
+        <div class="related-post-author">
+            <a href="../author/chulgil/">Chulgil.Lee</a><br>
+        </div>   
+    </section>
+    
+    <section class="related-post post tag-kr tag-code tag-algorithm tag-leetcode no-image">
+        <div class="related-post-title">
+            <h3><a href="../leetcode-015-2/">[LeetCode] #015 Three Sum - Improve speed</a>
+            </h3>
+        </div>
+        <div class="related-post-author">
+            <a href="../author/chulgil/">Chulgil.Lee</a><br>
+        </div>   
+    </section>
+</div>
+<div class="pagination-wrap" role="navigation">
+	<a class="newer-posts" href="../leetcode-263/">Newer Article</a>
+	<hr>
+	<a class="older-posts" href="../how-to-pay-online-for-ticket/">Older Article</a>
+</div><div class="disqus"></div>
+
+		</div>
+		<footer class="footer-wrap">
+	<div class="footer-social">
+		<a href="https://www.facebook.com/chulgil2"><i class="facebook"></i></a>
+		<a href="https://twitter.com/chulgil_lee"><i class="twitter"></i></a>
+			</div>
+	<div class="footer-copyright">
+		Copyright &copy; 2019, <a href="../">CG.Lee Blog</a>. All Right Reserved.
+		<br>
+		Published with <a href="https://ghost.org">Ghost</a>.
+	</div>
+</footer>	</div>
+		<div class="section-search flex">
+	<div class="search-close"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.4285714,12 L24,20.5714286 L20.5714286,24 L12,15.4285714 L3.42857143,24 L3.55271368e-15,20.5714286 L8.57142857,12 L5.32907052e-15,3.42857143 L3.42857143,3.55271368e-15 L12,8.57142857 L20.5714286,3.55271368e-15 L24,3.42857143 L15.4285714,12 Z"/></svg></div>
+	<div class="search-image" style="background-image: url(../content/images/2019/01/life-1.png)">
+	</div>
+	<div class="search-wrap">
+		<div class="search-content">
+			<form class="search-form flex" onsubmit="return false">
+				<input type="text" class="search-input" placeholder="Type your keywords..." autofocus>
+			</form>
+			<div class="search-meta">
+				<span class="search-info-wrap">Please enter at least 3 characters</span>
+				<span class="search-counter-wrap hide">
+					<span class="counter-results">0</span>
+				Results for your search</span>
+			</div>
+			<div class="search-results">
+			</div>
+			<div class="search-suggestion flex">
+				<div class="search-suggestion-tags">
+	<h3>May we suggest a tag?</h3>
+	<a class="post-tag global-tag" href="../tag/kr/">kr</a>
+	<a class="post-tag global-tag" href="../tag/tip/">TIP</a>
+	<a class="post-tag global-tag" href="../tag/blog/">BLOG</a>
+	<a class="post-tag global-tag" href="../tag/code/">CODE</a>
+	<a class="post-tag global-tag" href="../tag/algorithm/">ALGORITHM</a>
+	<a class="post-tag global-tag" href="../tag/leetcode/">LeetCode</a>
+	<a class="post-tag global-tag" href="../tag/life/">LIFE</a>
+	<a class="post-tag global-tag" href="../tag/db/">DB</a>
+	<a class="post-tag global-tag" href="../tag/mac/">MAC</a>
+	<a class="post-tag global-tag" href="../tag/glossary/">GLOSSARY</a>
+</div>
+				<div class="search-suggestion-authors">
+	<h3>May we suggest an author?</h3>
+	<a class="post-tag global-tag" href="../author/chulgil/">Chulgil.Lee</a>
+	<a class="post-tag global-tag" href="../author/ghost/">Ghost</a>
+</div>
+			</div>
+		</div>
+		<div class="search-footer">
+			<a href="../">CG.Lee Blog.</a>
+			<span>Thoughts, stories and ideas.</span>
+		</div>
+	</div>
+</div>
+<script>
+		var searchPublished = 'Published';
+		var searchFeaturedIcon = '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.9712403,8.05987765 L16.2291373,8.05987765 L12.796794,0.459688839 C12.5516266,-0.153229613 11.4483734,-0.153229613 11.0806223,0.459688839 L7.64827899,8.05987765 L0.906176009,8.05987765 C0.538424938,8.05987765 0.170673866,8.30504503 0.0480901758,8.6727961 C-0.0744935148,9.04054717 0.0480901758,9.40829825 0.293257557,9.65346563 L5.31918887,14.3116459 L3.11268244,22.4021694 C2.99009875,22.7699205 3.11268244,23.1376716 3.48043351,23.382839 C3.72560089,23.6280063 4.21593565,23.6280063 4.46110303,23.5054227 L11.9387082,19.2149935 L19.4163133,23.5054227 C19.538897,23.6280063 19.6614807,23.6280063 19.906648,23.6280063 C20.1518154,23.6280063 20.2743991,23.5054227 20.5195665,23.382839 C20.7647339,23.1376716 20.8873176,22.7699205 20.8873176,22.4021694 L18.6808111,14.3116459 L23.7067424,9.65346563 C23.9519098,9.40829825 24.0744935,9.04054717 23.9519098,8.6727961 C23.7067424,8.30504503 23.3389914,8.05987765 22.9712403,8.05987765 Z"/></svg>';
+</script>
+		<script src="../assets/js/global.js?v=c64ad04006"></script>
+		<script src="../assets/js/post.js?v=c64ad04006"></script>
+		<script>var options={scriptUrl:"//cglee-blog.disqus.com/embed.js",laziness:1,throttle:250,disqusConfig:function(){this.page.identifier="5c58c3e38db38e000104533e"}};disqusLoader(".disqus",options);</script>
+		<script src="../assets/js/global-search.js?v=c64ad04006"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-132271510-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-132271510-2');
+</script>
+<script>
+document.body.ondragstart = function () { return false };
+$('a').each(function() {
+	var a = new RegExp('/' + window.location.host + '/');
+	if(!a.test(this.href)) {
+       	$(this).click(function(event) {
+            event.preventDefault();
+           	event.stopPropagation();
+           	window.open(this.href, '_blank');
+      	});
+  	 }
+});
+</script>
+	</body>
+</html>

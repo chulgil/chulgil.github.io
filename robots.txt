@@ -1,0 +1,4 @@
+User-agent: *
+Sitemap: https://blog.chulgil.me/sitemap.xml
+Disallow: /ghost/
+Disallow: /p/

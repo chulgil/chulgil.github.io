@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html ⚡>
+<head>
+    <meta charset="utf-8">
+
+    <title>알고리즘의 시간 복잡도와 Big-O 쉽게 이해하기</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="../" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    
+    <meta property="og:site_name" content="CG.Lee Blog" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="알고리즘의 시간 복잡도와 Big-O 쉽게 이해하기" />
+    <meta property="og:description" content="삼성역에서 택시를 타고 강남역으로 향했는데 30분 걸렸다. 구글에서 알려주는 최단경로로 갔더라면 15분내에 도착할 것이다. 레스토랑을 예약해서 가는 경우라던지 친구와 약속시간을 잡은경우 우리에게는 시간은 항상 소중하다. 그래서 우리는 시간을 효율적으로 사용하기위한 노력을 의식적으로 하고 있다. 컴퓨터 프로그래밍에서도 시간복잡도가 가장 낮은 알고리즘을 채택해 이러한 상황을 개선하고 있다. 택시를 타고 삼성역까지 가는 절차를" />
+    <meta property="og:url" content="https://blog.chulgil.me/algorithm/" />
+    <meta property="article:published_time" content="2019-02-07T19:52:40.000Z" />
+    <meta property="article:modified_time" content="2019-02-07T22:39:41.000Z" />
+    <meta property="article:tag" content="kr" />
+    <meta property="article:tag" content="CODE" />
+    <meta property="article:tag" content="ALGORITHM" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/chulgil2" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="알고리즘의 시간 복잡도와 Big-O 쉽게 이해하기" />
+    <meta name="twitter:description" content="삼성역에서 택시를 타고 강남역으로 향했는데 30분 걸렸다. 구글에서 알려주는 최단경로로 갔더라면 15분내에 도착할 것이다. 레스토랑을 예약해서 가는 경우라던지 친구와 약속시간을 잡은경우 우리에게는 시간은 항상 소중하다. 그래서 우리는 시간을 효율적으로 사용하기위한 노력을 의식적으로 하고 있다. 컴퓨터 프로그래밍에서도 시간복잡도가 가장 낮은 알고리즘을 채택해 이러한 상황을 개선하고 있다. 택시를 타고 삼성역까지 가는 절차를" />
+    <meta name="twitter:url" content="https://blog.chulgil.me/algorithm/" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Chulgil.Lee" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="kr, CODE, ALGORITHM" />
+    <meta name="twitter:site" content="@chulgil_lee" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "CG.Lee Blog",
+        "logo": "https://static.ghost.org/v1.0.0/images/ghost-logo.svg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Chulgil.Lee",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/1c9a877c23005f203f834b78c457bd0e?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://blog.chulgil.me/author/chulgil/",
+        "sameAs": []
+    },
+    "headline": "알고리즘의 시간 복잡도와 Big-O 쉽게 이해하기",
+    "url": "https://blog.chulgil.me/algorithm/",
+    "datePublished": "2019-02-07T19:52:40.000Z",
+    "dateModified": "2019-02-07T22:39:41.000Z",
+    "keywords": "kr, CODE, ALGORITHM",
+    "description": "삼성역에서 택시를 타고 강남역으로 향했는데 30분 걸렸다. 구글에서 알려주는 최단경로로 갔더라면 15분내에 도착할 것이다. 레스토랑을 예약해서 가는 경우라던지 친구와 약속시간을 잡은경우 우리에게는 시간은 항상 소중하다. 그래서 우리는 시간을 효율적으로 사용하기위한 노력을 의식적으로 하고 있다. 컴퓨터 프로그래밍에서도 시간복잡도가 가장 낮은 알고리즘을 채택해 이러한 상황을 개선하고 있다. 택시를 타고 삼성역까지 가는 절차를",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.chulgil.me/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 2.10" />
+    <link rel="alternate" type="application/rss+xml" title="CG.Lee Blog" href="../../rss/" />
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,600,400" />
+    <style amp-custom>html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:bold}dfn{font-style:italic}h1{margin:0.67em 0;font-size:2em}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{position:relative;vertical-align:baseline;font-size:75%;line-height:0}sup{top:-0.5em}sub{bottom:-0.25em}img{border:0}amp-img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace, monospace;font-size:1em}button,input,optgroup,select,textarea{margin:0;color:inherit;font:inherit}button{overflow:visible}button,select{text-transform:none}button,html input[type="button"],input[type="reset"],input[type="submit"]{cursor:pointer;-webkit-appearance:button}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{padding:0;border:0}input{line-height:normal}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height:auto}input[type="search"]{-webkit-appearance:textfield}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}fieldset{margin:0 2px;padding:0.35em 0.625em 0.75em;border:1px solid #c0c0c0}legend{padding:0;border:0}textarea{overflow:auto}optgroup{font-weight:bold}table{border-spacing:0;border-collapse:collapse}td,th{padding:0}html{max-height:100%;height:100%;font-size:62.5%;-webkit-tap-highlight-color:rgba(0, 0, 0, 0)}body{max-height:100%;height:100%;color:#3a4145;background:#f4f8fb;letter-spacing:0.01rem;font-family:"Merriweather", serif;font-size:1.8rem;line-height:1.75em;text-rendering:geometricPrecision;-webkit-font-feature-settings:"kern" 1;-moz-font-feature-settings:"kern" 1;-o-font-feature-settings:"kern" 1}::-moz-selection{background:#d6edff}::selection{background:#d6edff}h1,h2,h3,h4,h5,h6{margin:0 0 0.3em 0;color:#2e2e2e;font-family:"Open Sans", sans-serif;line-height:1.15em;text-rendering:geometricPrecision;-webkit-font-feature-settings:"dlig" 1, "liga" 1, "lnum" 1, "kern" 1;-moz-font-feature-settings:"dlig" 1, "liga" 1, "lnum" 1, "kern" 1;-o-font-feature-settings:"dlig" 1, "liga" 1, "lnum" 1, "kern" 1}h1{text-indent:-2px;letter-spacing:-1px;font-size:2.6rem}h2{letter-spacing:0;font-size:2.4rem}h3{letter-spacing:-0.6px;font-size:2.1rem}h4{font-size:1.9rem}h5{font-size:1.8rem}h6{font-size:1.8rem}a{color:#4a4a4a}a:hover{color:#111}p,ul,ol,dl{margin:0 0 2.5rem 0;font-size:1.5rem;text-rendering:geometricPrecision;-webkit-font-feature-settings:"liga" 1, "onum" 1, "kern" 1;-moz-font-feature-settings:"liga" 1, "onum" 1, "kern" 1;-o-font-feature-settings:"liga" 1, "onum" 1, "kern" 1}ol,ul{padding-left:2em}ol ol,ul ul,ul ol,ol ul{margin:0 0 0.4em 0;padding-left:2em}dl dt{float:left;clear:left;overflow:hidden;margin-bottom:1em;width:180px;text-align:right;text-overflow:ellipsis;white-space:nowrap;font-weight:700}dl dd{margin-bottom:1em;margin-left:200px}li{margin:0.4em 0}li li{margin:0}hr{display:block;margin:1.75em 0;padding:0;height:1px;border:0;border-top:#efefef 1px solid}blockquote{box-sizing:border-box;margin:1.75em 0 1.75em 0;padding:0 0 0 1.75em;border-left:#4a4a4a 0.4em solid;-moz-box-sizing:border-box}blockquote p{margin:0.8em 0;font-style:italic}blockquote small{display:inline-block;margin:0.8em 0 0.8em 1.5em;color:#ccc;font-size:0.9em}blockquote small:before{content:"\2014 \00A0"}blockquote cite{font-weight:700}blockquote cite a{font-weight:normal}mark{background-color:#fdffb6}code,tt{padding:1px 3px;border:#e3edf3 1px solid;background:#f7fafb;border-radius:2px;white-space:pre-wrap;font-family:Inconsolata, monospace, sans-serif;font-size:0.85em;font-feature-settings:"liga" 0;-webkit-font-feature-settings:"liga" 0;-moz-font-feature-settings:"liga" 0}pre{overflow:auto;box-sizing:border-box;margin:0 0 1.75em 0;padding:10px;width:100%;border:#e3edf3 1px solid;background:#f7fafb;border-radius:3px;white-space:pre;font-family:Inconsolata, monospace, sans-serif;font-size:0.9em;-moz-box-sizing:border-box}pre code,pre tt{padding:0;border:none;background:transparent;white-space:pre-wrap;font-size:inherit}kbd{display:inline-block;margin-bottom:0.4em;padding:1px 8px;border:#ccc 1px solid;background:#f4f4f4;border-radius:4px;box-shadow:0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 #fff inset;color:#666;text-shadow:#fff 0 1px 0;font-size:0.9em;font-weight:700}table{box-sizing:border-box;margin:1.75em 0;max-width:100%;width:100%;background-color:transparent;-moz-box-sizing:border-box}table th,table td{padding:8px;border-top:#efefef 1px solid;vertical-align:top;text-align:left;line-height:20px}table th{color:#000}table caption + thead tr:first-child th,table caption + thead tr:first-child td,table colgroup + thead tr:first-child th,table colgroup + thead tr:first-child td,table thead:first-child tr:first-child th,table thead:first-child tr:first-child td{border-top:0}table tbody + tbody{border-top:#efefef 2px solid}table table table{background-color:#fff}table tbody > tr:nth-child(odd) > td,table tbody > tr:nth-child(odd) > th{background-color:#f6f6f6}table.plain tbody > tr:nth-child(odd) > td,table.plain tbody > tr:nth-child(odd) > th{background:transparent}iframe,amp-iframe,.fluid-width-video-wrapper{display:block;margin:1.75em 0}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper amp-iframe{margin:0}textarea,select,input{margin:0 0 5px 0;padding:6px 9px;width:260px;outline:0;border:#e7eef2 1px solid;background:#fff;border-radius:4px;box-shadow:none;font-family:"Open Sans", sans-serif;font-size:1.6rem;line-height:1.4em;font-weight:100;-webkit-appearance:none}textarea{min-width:250px;min-height:80px;max-width:340px;width:100%;height:auto}input[type="text"]:focus,input[type="email"]:focus,input[type="search"]:focus,input[type="tel"]:focus,input[type="url"]:focus,input[type="password"]:focus,input[type="number"]:focus,input[type="date"]:focus,input[type="month"]:focus,input[type="week"]:focus,input[type="time"]:focus,input[type="datetime"]:focus,input[type="datetime-local"]:focus,textarea:focus{outline:none;outline-width:0;border:#bbc7cc 1px solid;background:#fff}select{width:270px;height:30px;line-height:30px}.clearfix:before,.clearfix:after{content:" ";display:table}.clearfix:after{clear:both}.clearfix{zoom:1}.main-header{position:relative;display:table;overflow:hidden;box-sizing:border-box;width:100%;height:50px;background:#5ba4e5 no-repeat center center;background-size:cover;text-align:left;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}.content{background:#fff;padding-top:15px}.blog-title,.content{margin:auto;max-width:600px}.blog-title a{display:block;padding-right:16px;padding-left:16px;height:50px;color:#fff;text-decoration:none;font-family:"Open Sans", sans-serif;font-size:16px;line-height:50px;font-weight:600}.post{position:relative;margin-top:0;margin-right:16px;margin-left:16px;padding-bottom:0;max-width:100%;border-bottom:#ebf2f6 1px solid;word-wrap:break-word;font-size:0.95em;line-height:1.65em}.post-header{margin-bottom:1rem}.post-title{margin-bottom:0}.post-title a{text-decoration:none}.post-meta{display:block;margin:3px 0 0 0;color:#9eabb3;font-family:"Open Sans", sans-serif;font-size:1.3rem;line-height:2.2rem}.post-meta a{color:#9eabb3;text-decoration:none}.post-meta a:hover{text-decoration:underline}.post-meta .author{margin:0;font-size:1.3rem;line-height:1.3em}.post-date{display:inline-block;text-transform:uppercase;white-space:nowrap;font-size:1.2rem;line-height:1.2em}.post-image{margin:0;padding-top:3rem;padding-bottom:30px;border-top:1px #E8E8E8 solid}.post-content amp-img,.post-content amp-anim{position:relative;left:50%;display:block;padding:0;min-width:0;max-width:112%;width:calc(100% + 32px);height:auto;transform:translateX(-50%);-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%)}.footnotes{font-size:1.3rem;line-height:1.6em;font-style:italic}.footnotes li{margin:0.6rem 0}.footnotes p{margin:0}.footnotes p a:last-child{text-decoration:none}.site-footer{position:relative;margin:0 auto 20px auto;padding:1rem 15px;max-width:600px;color:rgba(0,0,0,0.5);font-family:"Open Sans", sans-serif;font-size:1.1rem;line-height:1.75em}.site-footer a{color:rgba(0,0,0,0.5);text-decoration:none;font-weight:bold}.site-footer a:hover{border-bottom:#bbc7cc 1px solid}.poweredby{display:block;float:right;width:45%;text-align:right}.copyright{display:block;float:left;width:45%}</style>
+
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+    
+
+</head>
+
+<body class="amp-template">
+    <header class="main-header">
+        <nav class="blog-title">
+            <a href="../../">CG.Lee Blog</a>
+        </nav>
+    </header>
+
+    <main class="content" role="main">
+        <article class="post">
+
+            <header class="post-header">
+                <h1 class="post-title">알고리즘의 시간 복잡도와 Big-O 쉽게 이해하기</h1>
+                <section class="post-meta">
+                    <p class="author">by <a href="../../author/chulgil/">Chulgil.Lee</a></p>
+                    <time class="post-date" datetime="2019-02-07">2019-02-07</time>
+                </section>
+            </header>
+            <section class="post-content">
+
+                <p>삼성역에서 택시를 타고 강남역으로 향했는데 30분 걸렸다. 구글에서 알려주는 최단경로로 갔더라면 15분내에 도착할 것이다. 레스토랑을 예약해서 가는 경우라던지 친구와 약속시간을 잡은경우 우리에게는 시간은 항상 소중하다. 그래서 우리는 시간을 효율적으로 사용하기위한 노력을 의식적으로 하고 있다.<br />
+컴퓨터 프로그래밍에서도 시간복잡도가 가장 낮은 알고리즘을 채택해 이러한 상황을 개선하고 있다. 택시를 타고 삼성역까지 가는 절차를 알고리즘이라고 하는데 이때 수행하는 연산의 수를 시간복잡도로 나타낸다. 택시를 타고 강남역까지 가는 과정을 알고리즘으로 표현하면 아래와 같다.</p>
+<pre><code>function TakeTaxy(from, to) {
+/*
+ 1. 차량에 탑승한다.
+ 2. from에서 to까지 최단거리 루트를 선택한다.
+ 3.   목적지까지 가는 루트을 설명한다.
+ 4.   출퇴근 시간의 경우 차가 막히는 루트는 피한다.
+ 5. 출발하는동안
+ 6.   만약 적색 신호등이면 정지한다.
+ 7.   만약 녹색 신호등이면 출발한다.
+ 8. 도착하면
+ 9.   요금을 정산한다.
+ 10. 차량에서 내린다.
+*/
+}
+</code></pre>
+<p>따라서 알고리즘이란</p>
+<ul>
+<li>어떤 목적을 달성하거나 결과물을 만들어내기 위해 거쳐야 하는 일련의 과정들을 의미한다.</li>
+<li>가는 루트는 다양하며 여러가지 상황에 따른 알고리즘은 모두 다르다. 따라서 시간복잡도가 가장 낮은 알고리즘을 선택하여 사용한다.</li>
+</ul>
+<p>여기서 알고리즘의 실행시간은 컴퓨터가 알고리즘 코드를 실행하는 속도에 의존한다.<br />
+이 속도는 컴퓨터의 처리속도, 사용된 언어종류, 컴파일러의 속도에 달려있다.</p>
+<p>알고리즘의 실행시간을 두 부분으로 나누면</p>
+<ol>
+<li>입력값의 크기에 따라 알고리즘의 실행시간을 검증해볼 수 있다.</li>
+<li>입력값의 크기에 따른 함수의 증가량, 우리는 이것을 성장률이라고 부른다.<br />
+이때 중요하지 않는 상수와 계수들을 제거하면 알고리즘의 실행시간에서 중요한<br />
+성장률에 집중할 수있는데 이것을 점금적 표기법(Asymptotic notation)이라 부른다.<br />
+여기서, 점근적이라는 의미는 가장 큰 영향을 주는 항만 계산한다는 의미다.</li>
+</ol>
+<p>점근적 표기법은 다음 세가지가 있는데 시간복잡도를 나타내는데 사용된다.</p>
+<ul>
+<li>최상의 경우 : 오메가 표기법 (Big-Ω Notation)</li>
+<li>평균의 경우 : 세타 표기법 (Big-θ Notation)</li>
+<li>최악의 경우 : 빅오 표기법 (Big-O Notation)</li>
+</ul>
+<p>평균인 세타 표기를 하면 가장 정확하고 좋겠지만 평가하기가 까다롭다.<br />
+그래서 최악의 경우인 빅오를 사용하는데 알고리즘이 최악일때의 경우를 판단하면 평균과 가까운 성능으로 예측하기 쉽기때문이다.</p>
+<h2 id="bigo">빅오 표기법(Big-O)</h2>
+<p>빅오 표기법은 불필요한 연산을 제거하여 알고리즘분석을 쉽게 할 목적으로 사용된다.</p>
+<p>Big-O로 측정되는 복잡성에는 시간과 공간복잡도가 있는데</p>
+<ul>
+<li>시간복잡도는 입력된 N의 크기에 따라 실행되는 조작의 수를 나타낸다.</li>
+<li>공간복잡도는 알고리즘이 실행될때 사용하는 메모리의 양을 나타낸다.<br />
+요즘에는 데이터를 저장할 수 있는 메모리의 발전으로 중요도가 낮아졌다.</li>
+<li>아래는 대표적인 Big-O의 복잡도를 나타내는 표이다.</li>
+</ul>
+<hr></hr>
+<figure class="kg-card kg-image-card kg-width-full"><amp-img src="https://blog.chulgil.me/content/images/2019/02/Screen-Shot-2019-02-07-at-2.31.54-PM-1.png" class="kg-image" width="832" height="552" layout="responsive"></amp-img><figcaption>http://bigocheatsheet.com/</figcaption></figure><h2 id>시간복잡도</h2>
+<p>시간복잡도의 가장 간단한 정의는 알고리즘의 성능을 설명하는 것이다.<br />
+다른의미로는 알고리즘을 수행하기 위해 프로세스가 수행해야하는 연산을 수치화 한것이다.<br />
+왜 실행시간이 아닌 연산수치로 판별할까? 위에도 설명했지만 명령어의 실행시간은 컴퓨터의 하드웨어 또는 프로그래밍 언어에 따라 편차가 크게 달라지기 때문에 명령어의 실행 횟수만을 고려하는 것이다.</p>
+<p>시간복잡도에서 중요하게 보는것은 가장큰 영향을 미치는 n의 단위이다.</p>
+<pre><code>1             O(1)   --&gt; 상수
+2n + 20       O(n)   --&gt; n이 가장 큰영향을 미친다.
+3n^2          O(n^2) --&gt; n^2이 가장 큰영향을 미친다.
+</code></pre>
+<p>시간복잡도의 문제해결 단계를 나열 하면 아래와같다.</p>
+<pre><code>O(1) – 상수 시간 : 문제를 해결하는데 오직 한 단계만 처리함.
+O(log n) – 로그 시간 : 문제를 해결하는데 필요한 단계들이 연산마다 특정 요인에 의해 줄어듬.
+O(n) – 직선적 시간 : 문제를 해결하기 위한 단계의 수와 입력값 n이 1:1 관계를 가짐.
+O(n log n) : 문제를 해결하기 위한 단계의 수가 N*(log2N) 번만큼의 수행시간을 가진다. (선형로그형)
+O(n^2) – 2차 시간 : 문제를 해결하기 위한 단계의 수는 입력값 n의 제곱.
+O(C^n) – 지수 시간 : 문제를 해결하기 위한 단계의 수는 주어진 상수값 C 의 n 제곱.
+</code></pre>
+<p>아래표는 실행시간이 빠른순으로 입력 N값에 따른 서로 다른 알고리즘의 시간복잡도이다.</p>
+<table>
+<thead>
+<tr>
+<th>Complexity</th>
+<th>1</th>
+<th>10</th>
+<th>100</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O(1)</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>O(log N)</td>
+<td>0</td>
+<td>2</td>
+<td>5</td>
+</tr>
+<tr>
+<td>O(N)</td>
+<td>1</td>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td>O(N log N)</td>
+<td>0</td>
+<td>20</td>
+<td>461</td>
+</tr>
+<tr>
+<td>O(N^2)</td>
+<td>1</td>
+<td>100</td>
+<td>10000</td>
+</tr>
+<tr>
+<td>O(2^N)</td>
+<td>1</td>
+<td>1024</td>
+<td>1267650600228229401496703205376</td>
+</tr>
+<tr>
+<td>O(N!)</td>
+<td>1</td>
+<td>3628800</td>
+<td>화면에 표현할 수 없음!</td>
+</tr>
+</tbody>
+</table><h3 id="o1">O(1) : 상수</h3>
+<p>아래 예제 처럼 입력에 관계없이 복잡도는 동일하게 유지된다.</p>
+<pre><code>def hello_world():
+        print("hello, world!")
+</code></pre>
+<h3 id="on">O(N) : 선형</h3>
+<p>입력이 증가하면 처리 시간또는 메모리 사용이 선형적으로 증가한다.</p>
+<pre><code>def print_each(li):
+    for item in li:
+        print(item)
+</code></pre>
+<h3 id="on2square">O(N^2) : Square</h3>
+<p>반복문이 두번 있는 케이스</p>
+<pre><code>def print_each_n_times(li):
+    for n in li:
+        for m in li:
+            print(n,m)
+</code></pre>
+<h3 id="olognonlogn">O(log n) O(n log n)</h3>
+<p>주로 입력 크기에 따라 처리 시간이 증가하는 정렬알고리즘에서 많이 사용된다.<br />
+다음은 이진검색의 예이다.</p>
+<pre><code>def binary_search(li, item, first=0, last=None):
+	if not last:
+		last = len(li)
+
+	midpoint = (last - first) / 2 + first
+
+	if li[midpoint] == item:
+		return midpoint
+
+	elif li[midpoint] &gt; item:
+		return binary_search(li, item, first, midpoint)
+
+	else:
+		return binary_search(li, item, midpoint, last)
+
+</code></pre>
+<h2 id>시간복잡도를 구하는 요령</h2>
+<p>각 문제의 시간복잡도 유형을 빨리 파악할 수 있도록 아래 예를 통해 빠르게 알아 볼수 있다.</p>
+<ul>
+<li>하나의 루프를 사용하여 단일 요소 집합을 반복 하는 경우 : O (n)</li>
+<li>컬렉션의 절반 이상 을 반복 하는 경우 :  O (n / 2) -&gt; O (n)</li>
+<li>두 개의 다른 루프를 사용하여 두 개의 개별 콜렉션을 반복 할 경우 : O (n + m) -&gt; O (n)</li>
+<li>두 개의 중첩 루프를 사용하여 단일 컬렉션을 반복하는 경우 : O (n²)</li>
+<li>두 개의 중첩 루프를 사용하여 두 개의 다른 콜렉션을 반복 할 경우 : O (n * m) -&gt; O (n²)</li>
+<li>컬렉션 정렬을 사용하는 경우 : O(n*log(n))</li>
+</ul>
+<p></p><h2 id="-">정렬 알고리즘 비교</h2> <table>
+         <thead>
+            <tr role="row">
+               <th rowspan="2" data-column="0" tabindex="0" scope="col" role="columnheader" aria-disabled="false"><div>Sorting Algorithms</div></th>
+               <th>공간 복잡도</th>
+               <th><div>시간 복잡도</div></th>
+            </tr>
+
+            <tr role="row">
+               <th data-column="1"><div>최악</div></th>
+               <th data-column="2"><div>최선</div></th>
+               <th data-column="3"><div>평균</div></th>
+               <th data-column="4"><div>최악</div></th>
+            </tr>
+         </thead>
+
+         <tbody aria-live="polite" aria-relevant="all">
+         <tr role="row">
+               <td>Bubble Sort</td>
+               <td data-text="1">O(1)</td>
+
+               <td data-text="3">O(n)</td>
+               <td data-text="5">O(n<sup>2</sup>)
+               </td>
+               <td data-text="5">O(n<sup>2</sup>)
+               </td>
+            </tr><tr role="row">
+               <td>Heapsort</td>
+               <td data-text="1">O(1)</td>
+
+               <td data-text="4">O(n log n)</td>
+               <td data-text="4">O(n log n)</td>
+               <td data-text="4">O(n log n)</td>
+            </tr><tr role="row">
+               <td>Insertion Sort</td>
+               <td data-text="1">O(1)</td>
+
+               <td data-text="3">O(n)</td>
+               <td data-text="5">O(n<sup>2</sup>)
+               </td>
+               <td data-text="5">O(n<sup>2</sup>)
+               </td>
+            </tr><tr role="row">
+
+               <td>Mergesort</td>
+               <td data-text="3">O(n)</td>
+
+               <td data-text="4">O(n log n)</td>
+               <td data-text="4">O(n log n)</td>
+               <td data-text="4">O(n log n)</td>
+
+            </tr><tr role="row">
+
+               <td>Quicksort</td>
+               <td data-text="2">O(log n)</td>
+
+               <td data-text="4">O(n log n)</td>
+               <td data-text="4">O(n log n)</td>
+               <td data-text="4">O(n log n)</td>
+
+            </tr><tr role="row">
+               <td>Selection Sort</td>
+               <td data-text="1">O(1)</td>
+
+               <td data-text="5">O(n<sup>2</sup>)
+               </td>
+               <td data-text="5">O(n<sup>2</sup>)
+               </td>
+               <td data-text="5">O(n<sup>2</sup>)
+               </td>
+            </tr><tr role="row">
+               <td>Shell Sort</td>
+               <td data-text="1">O(1)</td>
+
+               <td data-text="3">O(n)</td>
+               <td data-text="6">O(n log n<sup>2</sup>)
+               </td>
+               <td data-text="6">O(n log n<sup>2</sup>)
+               </td>
+            </tr><tr role="row">
+               <td>Smooth Sort</td>
+               <td data-text="1">O(1)</td>
+
+               <td data-text="3">O(n)</td>
+               <td data-text="4">O(n log n)</td>
+               <td data-text="4">O(n log n)</td>
+
+            </tr></tbody>
+
+      </table><hr></hr><h2 id="--1">자료구조 비교</h2>
+      <table>
+         <thead>
+            <tr role="row">
+               <th rowspan="2" data-column="0" tabindex="0" scope="col" role="columnheader" aria-disabled="false"><div>Data  Structures</div></th>
+               <th colspan="3"><div>Average Case</div></th>
+               <th colspan="3">Worst Case</th>
+            </tr>
+            <tr role="row">
+               <th data-column="1">Search</th>
+               <th data-column="2">Insert</th>
+               <th data-column="3">Delete</th>
+               <th data-column="4">Search</th>
+               <th data-column="5">Insert</th>
+               <th data-column="6">Delete</th>
+            </tr>
+         </thead>
+
+         <tbody aria-live="polite" aria-relevant="all">
+            <tr role="row">
+               <td>Array</td>
+               <td>O(n)</td>
+               <td>N/A</td>
+               <td>N/A</td>
+               <td>O(n)</td>
+               <td>N/A</td>
+               <td>N/A</td>
+            </tr>
+            <tr role="row">
+               <td>Sorted Array</td>
+               <td>O(log
+                  n)</td>
+               <td>O(n)</td>
+               <td>O(n)</td>
+               <td>O(log
+                  n)</td>
+               <td>O(n)</td>
+               <td>O(n)</td>
+            </tr>
+            <tr role="row">
+               <td>Linked List</td>
+               <td>O(n)</td>
+               <td>O(1)</td>
+               <td>O(1)</td>
+               <td>O(n)</td>
+               <td>O(1)</td>
+               <td>O(1)</td>
+            </tr>
+            <tr role="row">
+               <td>Doubly Linked List</td>
+               <td>O(n)</td>
+               <td>O(1)</td>
+               <td>O(1)</td>
+               <td>O(n)</td>
+               <td>O(1)</td>
+               <td>O(1)</td>
+            </tr>
+            <tr role="row">
+               <td>Stack</td>
+               <td>O(n)</td>
+               <td>O(1)</td>
+               <td>O(1)</td>
+               <td>O(n)</td>
+               <td>O(1)</td>
+               <td>O(1)</td>
+            </tr>
+            <tr role="row">
+               <td>Hash table</td>
+               <td>O(1)</td>
+               <td>O(1)</td>
+               <td>O(1)</td>
+               <td>O(n)</td>
+               <td>O(n)</td>
+               <td>O(n)</td>
+            </tr>
+            <tr role="row">
+               <td>Binary Search Tree</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+
+                  n)</td>
+               <td>O(log
+                  n)</td>
+               <td>O(n)</td>
+               <td>O(n)</td>
+               <td>O(n)</td>
+            </tr>
+            <tr role="row">
+               <td>B-Tree</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+                  n)</td>
+            </tr>
+            <tr role="row">
+               <td>Red-Black tree</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+                  n)</td>
+            </tr>
+            <tr role="row">
+               <td>AVL Tree</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+                  n)</td>
+               <td>O(log
+                  n)</td>
+            </tr>
+
+         </tbody>
+      </table>
+
+            </section>
+
+        </article>
+    </main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="../../">CG.Lee Blog</a> &copy; 2019</section>
+        <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+    </footer>
+</body>
+</html>

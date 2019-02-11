@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[LeetCode - CG.Lee Blog]]></title><description><![CDATA[Thoughts, stories and ideas.]]></description><link>https://blog.chulgil.me/</link><image><url>https://blog.chulgil.me/favicon.png</url><title>LeetCode - CG.Lee Blog</title><link>https://blog.chulgil.me/</link></image><generator>Ghost 2.10</generator><lastBuildDate>Mon, 11 Feb 2019 19:29:10 GMT</lastBuildDate><atom:link href="https://blog.chulgil.me/tag/leetcode/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[[LeetCode] #263 - Ugly Number]]></title><description><![CDATA[<h3 id="">주어진 문제는 아래와 같다.</h3>
+<hr>
+<p>난의도 : ★★☆☆☆</p>
+<p>Write a program to check whether a given number is an ugly number.</p>
+<p>Ugly numbers are positive numbers whose prime factors only include 2, 3, 5.</p>
+<p>Note:</p>
+<p>1 is typically treated as an ugly number.<br>
+Input is within the 32-bit signed integer range: [−2^31,</p>]]></description><link>https://blog.chulgil.me/leetcode-263/</link><guid isPermaLink="false">5c5b02f58db38e000104535a</guid><category><![CDATA[kr]]></category><category><![CDATA[CODE]]></category><category><![CDATA[ALGORITHM]]></category><category><![CDATA[LeetCode]]></category><dc:creator><![CDATA[Chulgil.Lee]]></dc:creator><pubDate>Wed, 06 Feb 2019 23:04:11 GMT</pubDate><content:encoded><![CDATA[<h3 id="">주어진 문제는 아래와 같다.</h3>
+<hr>
+<p>난의도 : ★★☆☆☆</p>
+<p>Write a program to check whether a given number is an ugly number.</p>
+<p>Ugly numbers are positive numbers whose prime factors only include 2, 3, 5.</p>
+<p>Note:</p>
+<p>1 is typically treated as an ugly number.<br>
+Input is within the 32-bit signed integer range: [−2^31,  2^31 − 1].</p>
+<pre><code>Input: 6
+Output: true
+Explanation: 6 = 2 × 3
+
+Output: true
+Explanation: 8 = 2 × 2 × 2
+
+Input: 14
+Output: false 
+Explanation: 14 is not ugly since it includes another prime factor 7.
+</code></pre>
+<hr>
+<h2 id="">분석하기</h2>
+<p>즉 입력받은 숫자가 소수(factors)이고 소인수(prime factors)가 2, 3, 5중에 하나이면  True 아니면 False 를 반환해주는 문제이다.</p>
+<p>먼저 소수가 무엇인지 알아보면 나눠지는 수 즉 약수(divisor)가 1과 자기 자신인 수이다.<br>
+<code>EX) 2, 3, 5, 7, 11, 13, 17</code></p>
+<p>즉 2 부터 N - 1까지 순서대로 정수로 나눠서 떨어지는 수가 없으면 소수인데<br>
+이 문제의 경우 [2, 3, 5]를 순서대로 계속 나눠서 최종적으로 떨어지는 수가 1인경우 True를 반환하면 된다.</p>
+<h2 id="">코드로 구현하기 (파이썬)</h2>
+<pre><code>class Solution:
+    def isUgly(self, num: 'int') -&gt; 'bool':
+        if num is 0 : return False
+        for i in [2, 3, 5] :
+            while num % i is 0:
+                num = num // i
+        return num is 1
+</code></pre>
+<p>시간 복잡도는 O(log n)이 되겠다.</p>
+]]></content:encoded></item><item><title><![CDATA[[LeetCode] #16 - 3Sum Closest]]></title><description><![CDATA[<p>이번 문제는 3Sum문제와 유사하지만 3개정수의 합이 입력받은 target에 가까운 수의 정수를 리턴하는 문제이다.</p>
+<p>난의도 : ★★★☆☆</p>
+<p>Given an array <code>nums</code> of <em>n</em> integers and an integer <code>target</code>, find three integers in <code>nums</code> such that the sum is closest to <code>target</code>. Return the sum of the three integers. You may assume that each</p>]]></description><link>https://blog.chulgil.me/leetcode-016/</link><guid isPermaLink="false">5c548f2c8db38e00010451ed</guid><category><![CDATA[kr]]></category><category><![CDATA[CODE]]></category><category><![CDATA[ALGORITHM]]></category><category><![CDATA[LeetCode]]></category><dc:creator><![CDATA[Chulgil.Lee]]></dc:creator><pubDate>Fri, 01 Feb 2019 19:40:27 GMT</pubDate><content:encoded><![CDATA[<p>이번 문제는 3Sum문제와 유사하지만 3개정수의 합이 입력받은 target에 가까운 수의 정수를 리턴하는 문제이다.</p>
+<p>난의도 : ★★★☆☆</p>
+<p>Given an array <code>nums</code> of <em>n</em> integers and an integer <code>target</code>, find three integers in <code>nums</code> such that the sum is closest to <code>target</code>. Return the sum of the three integers. You may assume that each input would have exactly one solution.</p><pre><code>Given array nums = [-1, 2, 1, -4], and target = 1.
+
+The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+</code></pre>
+<h3 id="">먼저 의사코드를 작성하면 아래와 같다.</h3>
+<pre><code>1. 입력받은 수들을 오름차순 정렬한다.
+2. 근사값에 정수의 최대값을 할당한다.
+     최대값을 할당하면 처음 합과 비교할때 무조건 크기때문에 
+      조건문에서 초기값을 설정할 수 있다.
+3. 입력받은 리스트에서 -2만큼 순회한다.
+    4. 첫번째 포인트를 0으로 초기화
+    5. 두번째 포인트를 세번째포인트 - 1으로 초기화
+    6. 세번째 포인트를 2로 초기화
+    7. 첫번째 포인트보다 두번째 포인트가 클동안 순회한다.
+        8. 합계 = 리스트[첫] + 리스트[두] + 리스트[세]
+        9. 찾는값 타겟이 합계와 같으면 타겟을 리턴하고 종료한다.
+        10. 현재 합계가 타겟에 가장 가까운 값인경우 근사값에 절대값(합계-타겟)를  
+            설정하고 결과값에 합계를 설정한다.
+        11. 타겟이 합계보다 크면 첫번째 포인트를 증가시킨다.
+        12. 아니면 두번째 포인트를 감소시킨다.
+13. 결과값을 리턴한다. 
+</code></pre>
+<hr><h3 id="">코드로 구현하기 (파이썬)</h3>
+<pre><code class="language-py">class Solution:
+    def threeSumClosest(self, nums, target):
+        nums.sort()
+        closest = float('inf')
+        for p in range(2, len(nums)):
+            l = 0
+            r = p - 1
+            while l &lt; r:
+                sum = nums[l] + nums[r] + nums[p]
+                if target == sum: return target
+                if abs(target-sum) &lt; closest:
+                    closest = abs(target-sum)
+                    res = sum
+                if target &gt; sum: l += 1
+                else : r -= 1
+     return res
+</code></pre>
+<ul>
+<li>파이썬에서는 정수의 MAX값이 존재하지 않지만 공식적으로 최대값을 구하는 방법은<br>
+라이러리를 이용한 <code>sys.maxint - 1</code>이다. <a href="https://docs.python.org/2/library/stdtypes.html#numeric-types-int-float-long-complex">이 링크</a>에서 확인할 수 있다.<br>
+하지만 라이브러리 이용은 가급적 피하고 싶어서 무한수<code>flost('inf')</code>를 이용하였다.</li>
+</ul>
+<p>실행해보면 테스트케이스 125를 통과한 결과 124 ms가 나오는 것을 확인 할 수 있다.<br>
+시간복잡도는 O(n^2) 이다.</p>
+]]></content:encoded></item><item><title><![CDATA[[LeetCode] #015 Three Sum - Improve speed]]></title><description><![CDATA[<p>이번 포스트에서는 <a href="https://blog.chulgil.me/leetcode-015/">지난번에 구현한 3Sum</a>의 속도를 개선시킨 알고리즘을 설명한다.</p>
+<p>알고리즘 설명은 <a href="https://blog.chulgil.me/leetcode-015/">이 링크</a>에서 확인할 수 있다.</p>
+<h3 id="">먼저 의사코드를 작성하면 아래와 같다.</h3>
+<pre><code>입력받은 요소 = [-4, -3, -2, 1, 0, 1, 2, 2, 3]
+
+0. 리턴받을 리스트를 생성한다.
+1. 입력받은 요소를 오름차순정렬한다.
+2. 입력받은 요소들을 검색사전으로 만들기위해 해쉬맵을 생성한다.
+3.</code></pre>]]></description><link>https://blog.chulgil.me/leetcode-015-2/</link><guid isPermaLink="false">5c4f81c98db38e0001045158</guid><category><![CDATA[kr]]></category><category><![CDATA[CODE]]></category><category><![CDATA[ALGORITHM]]></category><category><![CDATA[LeetCode]]></category><dc:creator><![CDATA[Chulgil.Lee]]></dc:creator><pubDate>Tue, 29 Jan 2019 19:01:57 GMT</pubDate><content:encoded><![CDATA[<p>이번 포스트에서는 <a href="https://blog.chulgil.me/leetcode-015/">지난번에 구현한 3Sum</a>의 속도를 개선시킨 알고리즘을 설명한다.</p>
+<p>알고리즘 설명은 <a href="https://blog.chulgil.me/leetcode-015/">이 링크</a>에서 확인할 수 있다.</p>
+<h3 id="">먼저 의사코드를 작성하면 아래와 같다.</h3>
+<pre><code>입력받은 요소 = [-4, -3, -2, 1, 0, 1, 2, 2, 3]
+
+0. 리턴받을 리스트를 생성한다.
+1. 입력받은 요소를 오름차순정렬한다.
+2. 입력받은 요소들을 검색사전으로 만들기위해 해쉬맵을 생성한다.
+3. 해쉬맵의 키에 입력받은 요소들을 담고 값에는 중복되는 값을 카운트한다.
+   ex [-2,-1,0,0]:) hashmap[-2] = 1, hashmap[-1] = 1, hashmap[0] = 2
+3. 검색사전의 키값중 0의 값이 2개 이상이라면 리스트에 [0,0,0]을 추가한다.
+4. 검색사전으로 음수 집합 리스트를 생성한다.
+5. 검색사전으로 양수 집합 리스트를 생성한다.
+6. 음수 집합 리스트를 순환한다.
+    7. 양수 집합 리스트를 순환한다.
+        8.  음수요소와 양수요소를 더한 값을 합계에 설정하고 부호를 반전시킨다.
+        9.  검색사전에 합계가 존재하지 않으면 루프를 건너뛴다.
+        10. 다음 경우에 수에 해당하는 리스트를 추가한다.
+            [음의요소, 합계, 양의요소] 합계가 0인 경우
+            [합계, 음의요소, 양의요소] 합계가 음의요소보다 작을경우
+            [음의요소, 양의요소, 합계] 합계가 양의요소보다 클경우
+            [음의요소, 음의요소, 양의요소] 합계가 음의요소와 같고 요소가 1개이상인경우
+            [양의요소, 양의요소, 음의요소] 합계가 양의요소와 같고 요소가 1개 이상인경우
+11. 리스트를 반환한다.
+</code></pre>
+<h3 id="">코드로 구현하기 (파이썬)</h3>
+<pre><code>class Solution:
+    def threeSum(self, nums):
+        res = []
+        nums.sort()
+        lookup = dict()
+        for num in nums:
+            if num in lookup: lookup[num] += 1
+            else: lookup[num] = 1
+    
+        if 0 in lookup and lookup[0] &gt; 2: res.append([0,0,0])
+        neg = [n for n in lookup if n &lt; 0]
+        pos = [n for n in lookup if n &gt; 0]
+        for n in neg:
+            for p in pos:
+                sum = -p - n
+                if sum not in lookup: continue
+                if sum == 0: res.append([n,sum,p])
+                elif sum &lt; n: res.append([sum,n,p])
+                elif sum &gt; p: res.append([n,p,sum])
+                elif sum == n and lookup[sum] &gt; 1: res.append([n,n,p])
+                elif sum == p and lookup[sum] &gt; 1: res.append([n,p,p])
+        return res
+</code></pre>
+<p>이 알고리즘의 경우또한 O(n^2)로 시간복잡도가 전과 같지만 이미 계산된 결과값을 해시테이블에서 찾기때문에 속도가 빠르다. 실행시켜보면 313개의 테스트를 통과하고 런타임시간이 320 ms로 전보다 약 5배정도 빨라진 것을 확인 할 수 있다.</p>
+<h3 id="3sum-closet-"><a href="https://blog.chulgil.me/leetcode-016/">3Sum Closet 문제 보러가기</a><br></h3>]]></content:encoded></item><item><title><![CDATA[[LeetCode] #015 Three Sum]]></title><description><![CDATA[<p></p><p>지난 포스트에서 Two Sum을 구현했었는데 이번 Three Sum문제에서 활용할 수 있다.<br>
+먼저 문제는 아래와 같다.</p>
+<p>Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.</p>
+<p>Note:</p>]]></description><link>https://blog.chulgil.me/leetcode-015/</link><guid isPermaLink="false">5c4f57468db38e00010450d2</guid><category><![CDATA[kr]]></category><category><![CDATA[CODE]]></category><category><![CDATA[ALGORITHM]]></category><category><![CDATA[LeetCode]]></category><dc:creator><![CDATA[Chulgil.Lee]]></dc:creator><pubDate>Mon, 28 Jan 2019 22:19:25 GMT</pubDate><content:encoded><![CDATA[<p></p><p>지난 포스트에서 Two Sum을 구현했었는데 이번 Three Sum문제에서 활용할 수 있다.<br>
+먼저 문제는 아래와 같다.</p>
+<p>Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.</p>
+<p>Note:</p>
+<p>The solution set must not contain duplicate triplets.</p>
+<p>Example:</p>
+<pre><code>Given array nums = [-1, 0, 1, 2, -1, -4],
+
+A solution set is:
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+</code></pre>
+<p>위 예제처럼 배열 3개 요소를 더하여 0이 되는 요소들을 중복없이 반환하는 문제다.</p>
+<h3 id="">이것을 의사코드로 작성해보면 다음과 같다.</h3>
+<pre><code>0. Two Sum함수 작성
+1. 배열요소를 오름차순 정렬한다.
+2. 배열요소를 담을 해쉬셋를 생성
+3. 입력받은 요소들이 2보다 클 동안 
+    4. 배열요소에서 첫번째 요소를 추출한다.
+    5. TwoSum(배열요소)함수에서 결과값을 받아서 리스트에 담는다.
+    6. 리스트의 요소를 순회하면서
+        7. 첫번째 요소가 리스트에 존재하면 해쉬셋에 추가한다.
+8. 해쉬셋을 리스트로 반환한다.
+</code></pre>
+<hr>
+<h2 id="">코드로 구현하기 (파이썬)</h2>
+<h3 id="0twosum">0. Two Sum 함수 작성</h3>
+<p>먼저 지난 시간에 작성했던 Two Sum함수를 작성하면 아래와 같다.<br>
+원래는 처음 찾은 인덱스만 반환했었는데 일치하는 모든 데이터셋을 반환하도록 변경했다.</p>
+<pre><code class="language-py">    def twoSum(self, nums, target):
+        lookup = {}
+        hashset = set()
+        for index, item in enumerate(nums):
+            if item in lookup : hashset.add((nums[lookup[item]], nums[index]))
+            else : lookup[target - item] = index
+        return hashset
+</code></pre>
+<h3 id="18">1-8. 구현하기</h3>
+<pre><code class="language-py">    def threeSum(self, nums):
+        nums.sort()
+        res = set()
+        while len(nums) &gt; 2 :
+            key = nums.pop(0)
+            tmp = self.twoSum(nums, -key)
+            for item in tmp:
+                res.add((key, item[0], item[1]))
+        return [list(item) for item in res]
+</code></pre>
+<p>시간복잡도는: O(n^2)인 알고리즘이며 효율성보다는 심플한 알고리즘 설계를 목표로 했다.<br>
+실행시켜보면 원하는 결과 값을 확인 할 수 있는데 LeetCode에서 313개의 코드테스트 결과 1.6초가 나왔다.<br>
+다음번 포스트에서는 같은 문제를 효율성을 높인 다른 알고리즘으로 풀어 볼 것이다.</p>
+<pre><code>solution = Solution()
+print(solution.threeSum([-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6]))
+
+[[-4, -2, 6], [-2, 0, 2], [-4, 1, 3], [-2, -2, 4], [-4, 2, 2], [-4, 0, 4]]
+
+Runtime: 1604 ms, faster than 32.52% of Python3 online submissions for 3Sum.
+</code></pre>
+<h3 id="three-sum-"><a href="https://blog.chulgil.me/leetcode-015-2/">Three Sum 스피드개선 보러가기</a></h3>]]></content:encoded></item><item><title><![CDATA[[LeetCode] #001 Two Sum]]></title><description><![CDATA[<p>LeetCode 에서 Three Sum 문제를 해결하기 위해서는 Two Sum을 구현할 줄 알아야하므로<br>
+Two Sum을 구현해보려한다.</p>
+<p><a href="https://leetcode.com/problems/two-sum/solution/">https://leetcode.com/problems/two-sum/solution/</a></p>
+<blockquote>
+<p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.<br>
+You may assume that each input would have exactly</p></blockquote>]]></description><link>https://blog.chulgil.me/leetcode-001/</link><guid isPermaLink="false">5c49fab38db38e0001044fae</guid><category><![CDATA[kr]]></category><category><![CDATA[CODE]]></category><category><![CDATA[ALGORITHM]]></category><category><![CDATA[LeetCode]]></category><dc:creator><![CDATA[Chulgil.Lee]]></dc:creator><pubDate>Fri, 25 Jan 2019 21:12:00 GMT</pubDate><content:encoded><![CDATA[<p>LeetCode 에서 Three Sum 문제를 해결하기 위해서는 Two Sum을 구현할 줄 알아야하므로<br>
+Two Sum을 구현해보려한다.</p>
+<p><a href="https://leetcode.com/problems/two-sum/solution/">https://leetcode.com/problems/two-sum/solution/</a></p>
+<blockquote>
+<p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.<br>
+You may assume that each input would have exactly one solution, and you may not use the same element twice</p>
+</blockquote>
+<p>Example :</p>
+<pre><code>Given nums = [2, 7, 11, 15], target = 9,
+
+Because nums[0] + nums[1] = 2 + 7 = 9,
+return [0, 1].
+</code></pre>
+<p>먼저 주어진 정수배열에서 두 값의 합이 찾고자 하는 값일 경우 두 인덱스들의 요소를 리턴하면 되는데<br>
+동일한 요소는 한번만 사용해야한다.</p>
+<p>먼저 단순하게 생각해 보면 각 요소를 n번 반복하면서 (target값 - x) 과 같다면 요소를 리턴하는<br>
+코드를 작성해 볼 수 있다.</p>
+<pre><code class="language-py">def twoSum(self, nums, target):
+    for x in range(len(nums)):
+        for y in range(len(nums)):
+            if nums[y] == target - nums[x]:
+                return [x, y]
+    return []
+</code></pre>
+<p>이때 시간복잡도는 <code>O(n^2)</code> 이므로 효율이 떨어지는 알고리즘이라 할 수있다.</p>
+<p>배열을 처음부터 끝까지 다 찾아야하는 이 알고리즘을 개선하기 위해서는<br>
+O(1)공간과 O(n)시간을 교환하는 알고리즘을 사용할 수 있다.<br>
+즉 중복이 배제된 요소가 배열의 키로 들어가 있다면 시간복잡도 : O(n)으로 훨씬더 빠르게 찾을 수 있다.<br>
+이런 알고리즘에 최적화 된 것은 바로  해시테이블이다.</p>
+<p>먼저 코딩할 알고리즘을 풀어보면 아래와 같다.</p>
+<pre><code>1. 먼저 해시테이블을 생성하고
+2. 검색테이블을 순회하면서
+3. 만약 해시테이블에 검색키가 존재한다면 배열[x,y]를 리턴하고
+4. 그렇지 않으면 해시테이블의 키에 [target-배열의 요소값]로 하고 값을 요소의 키값으로 넣는다.
+</code></pre>
+<p>이제 파이썬으로 구현해보자.</p>
+<pre><code class="language-py">class Solution:
+    def twoSum(self, nums, target):
+        hashmap = {}
+        for index, item in enumerate(nums):
+            if item in hashmap:
+                return [hashmap[item], index]
+            else:
+                hashmap[target - item] = index
+        return []
+</code></pre>
+<p>이제 프로그램을 실행시켜 보면 시간복잡도 O(n)으로 개선시킨 결과값을 볼 수 있다.</p>
+<pre><code>solution = Solution()
+print(solution.twoSum([2, 5, 7, 15], 9))
+[0, 2]
+
+Process finished with exit code 0
+</code></pre>
+<p></p><h3 id="3sum"><a href="https://blog.chulgil.me/leetcode-015">3Sum 문제 보러가기</a></h3>
+]]></content:encoded></item><item><title><![CDATA[[LeetCode] #168 Excel Sheet Column Title]]></title><description><![CDATA[<p>Given a positive integer, return its corresponding column title as appear in an Excel sheet.</p>
+<p>For example:</p>
+<pre><code>1 -&gt; A
+2 -&gt; B
+3 -&gt; C
+...
+26 -&gt; Z
+27 -&gt; AA
+28 -&gt; AB 
+...
+</code></pre>
+<p>Example :</p>
+<pre><code>Input: 1
+Output: &quot;A&quot;
+Input: 28</code></pre>]]></description><link>https://blog.chulgil.me/leetcode-168/</link><guid isPermaLink="false">5c4b35538db38e0001044fd1</guid><category><![CDATA[kr]]></category><category><![CDATA[CODE]]></category><category><![CDATA[ALGORITHM]]></category><category><![CDATA[LeetCode]]></category><dc:creator><![CDATA[Chulgil.Lee]]></dc:creator><pubDate>Fri, 25 Jan 2019 19:30:42 GMT</pubDate><content:encoded><![CDATA[<p>Given a positive integer, return its corresponding column title as appear in an Excel sheet.</p>
+<p>For example:</p>
+<pre><code>1 -&gt; A
+2 -&gt; B
+3 -&gt; C
+...
+26 -&gt; Z
+27 -&gt; AA
+28 -&gt; AB 
+...
+</code></pre>
+<p>Example :</p>
+<pre><code>Input: 1
+Output: &quot;A&quot;
+Input: 28
+Output: &quot;AB&quot;
+Input: 701
+Output: &quot;ZY&quot;
+</code></pre>
+<hr><h3 id="">분석해보기</h3>
+<p>이 문제는 우리가 자주 사용하는 엑셀의 시트컬럼 문자를 숫자로 만드는 것인데 먼저 컬럼문자가 만들어지는  패턴을 분석해보면 아래와 같다.</p>
+<p>일단 알파벳의 수는 26개 이며 Z(26)를 넘은 숫자가 오면 다시 A가 된다. 즉 27이면 ZA가 될것이다.</p>
+<pre><code>ABCDEFGHIJKLMNOPQRSTUVWXYZ
+12345678901234567890123456
+</code></pre>
+<pre><code>A   1   AA  26+ 1   ...   ZA  26×26+ 1   AAA  1×26²+1×26+ 1
+B   2   AB  26+ 2   ...   ZB  26×26+ 2   AAB  1×26²+1×26+ 2
+.   .   ..  .....   ...   ..  ........   ...  .............
+.   .   ..  .....   ...   ..  ........   ...  .............
+Z  26   AZ  26+26   ...   ZZ  26×26+26   AAZ  1×26²+1×26+26
+</code></pre>
+<p>따라서 Output: &quot;ZY&quot;가 만들어지려면 아래와 같이 만들 수 있다.<br>
+ZY = Z x 26¹ + Y<br>
+ZY = 26 x 26¹ + 25<br>
+이번엔 숫자로부터 컬럼문자를 만드려면 반대로 (n % 26) 를 사용하면 된다.<br>
+701 / 26 = 26 = Z<br>
+701 % 26 = 25 = Y</p>
+<p>결국 26이라는 알파벳 바운더리에서 계속 나누어진 값이 0이면 계산을 종료할 수 있다.<br>
+<code>IF 26 / 26 == 0</code><br>
+하지만 27 / 26 이든 26 / 26 이든 결과값은 항상 1일 것이다.<br>
+따라서 (n - 1) / 26으로 계산식을 만들면 결과 값이 0이기 때문에 이런식을 사용한다.</p>
+<h3 id="">숫자를 알파벳으로</h3>
+<p>컴퓨터는 수로 이루어져있기 때문에 이 수를 이용해서 알파벳을 표현할수 있는 <a href="https://www.ascii-code.com/">ASCII테이블</a>을 만들었다.<br>
+대문자 A를 표현하기 위해서는 십진수 65를 사용하는데 파이썬에서는 <code>chr(65)함수</code>를 이용하면 <code>A</code>가 출력된다. 반대로 <code>ord(&quot;A&quot;)함수</code>를 이용하면 <code>65</code>가 출력된다.</p>
+<h3 id="">코드로 구현하기 (파이썬)</h3>
+<pre><code class="language-py">
+class Solution:
+    def convertToTitle(self, n):
+        str = ''
+        while n != 0
+            tmp = 'A' + (n-1) % 26
+            n = (n-1) // 26
+            str = tmp + str
+        return str
+
+</code></pre>
+<p>시간 복잡도는 : O(N) 공간복잡도는 : O(N)인 알고리즘이며<br>
+이제 실행시켜보면 원하는 결과값을 확인 할 수 있다.</p>
+<pre><code>solution = Solution()
+print(solution.convertToTitle(701))
+
+ZY
+Process finished with exit code 0
+</code></pre>
+<p></p>]]></content:encoded></item></channel></rss>

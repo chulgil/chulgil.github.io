@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>알고리즘의 시간 복잡도와 Big-O 쉽게 이해하기</title>
+		<meta name="HandheldFriendly" content="True">
+		<meta name="MobileOptimized" content="320">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400i&amp;subset=latin-ext" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../assets/css/normalize.css?v=c64ad04006">
+		<link rel="stylesheet" type="text/css" href="../assets/css/icons.css?v=c64ad04006">
+		<link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=c64ad04006">
+		<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="amp/" />
+    
+    <meta property="og:site_name" content="CG.Lee Blog" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="알고리즘의 시간 복잡도와 Big-O 쉽게 이해하기" />
+    <meta property="og:description" content="삼성역에서 택시를 타고 강남역으로 향했는데 30분 걸렸다. 구글에서 알려주는 최단경로로 갔더라면 15분내에 도착할 것이다. 레스토랑을 예약해서 가는 경우라던지 친구와 약속시간을 잡은경우 우리에게는 시간은 항상 소중하다. 그래서 우리는 시간을 효율적으로 사용하기위한 노력을 의식적으로 하고 있다. 컴퓨터 프로그래밍에서도 시간복잡도가 가장 낮은 알고리즘을 채택해 이러한 상황을 개선하고 있다. 택시를 타고 삼성역까지 가는 절차를" />
+    <meta property="og:url" content="https://blog.chulgil.me/algorithm/" />
+    <meta property="article:published_time" content="2019-02-07T19:52:40.000Z" />
+    <meta property="article:modified_time" content="2019-02-07T22:39:41.000Z" />
+    <meta property="article:tag" content="kr" />
+    <meta property="article:tag" content="CODE" />
+    <meta property="article:tag" content="ALGORITHM" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/chulgil2" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="알고리즘의 시간 복잡도와 Big-O 쉽게 이해하기" />
+    <meta name="twitter:description" content="삼성역에서 택시를 타고 강남역으로 향했는데 30분 걸렸다. 구글에서 알려주는 최단경로로 갔더라면 15분내에 도착할 것이다. 레스토랑을 예약해서 가는 경우라던지 친구와 약속시간을 잡은경우 우리에게는 시간은 항상 소중하다. 그래서 우리는 시간을 효율적으로 사용하기위한 노력을 의식적으로 하고 있다. 컴퓨터 프로그래밍에서도 시간복잡도가 가장 낮은 알고리즘을 채택해 이러한 상황을 개선하고 있다. 택시를 타고 삼성역까지 가는 절차를" />
+    <meta name="twitter:url" content="https://blog.chulgil.me/algorithm/" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Chulgil.Lee" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="kr, CODE, ALGORITHM" />
+    <meta name="twitter:site" content="@chulgil_lee" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "CG.Lee Blog",
+        "logo": "https://static.ghost.org/v1.0.0/images/ghost-logo.svg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Chulgil.Lee",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/1c9a877c23005f203f834b78c457bd0e?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://blog.chulgil.me/author/chulgil/",
+        "sameAs": []
+    },
+    "headline": "알고리즘의 시간 복잡도와 Big-O 쉽게 이해하기",
+    "url": "https://blog.chulgil.me/algorithm/",
+    "datePublished": "2019-02-07T19:52:40.000Z",
+    "dateModified": "2019-02-07T22:39:41.000Z",
+    "keywords": "kr, CODE, ALGORITHM",
+    "description": "삼성역에서 택시를 타고 강남역으로 향했는데 30분 걸렸다. 구글에서 알려주는 최단경로로 갔더라면 15분내에 도착할 것이다. 레스토랑을 예약해서 가는 경우라던지 친구와 약속시간을 잡은경우 우리에게는 시간은 항상 소중하다. 그래서 우리는 시간을 효율적으로 사용하기위한 노력을 의식적으로 하고 있다. 컴퓨터 프로그래밍에서도 시간복잡도가 가장 낮은 알고리즘을 채택해 이러한 상황을 개선하고 있다. 택시를 타고 삼성역까지 가는 절차를",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.chulgil.me/"
+    }
+}
+    </script>
+
+    <script src="../public/ghost-sdk.min.js?v=c64ad04006"></script>
+<script>
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "ff428a00f312"
+});
+</script>
+    <meta name="generator" content="Ghost 2.10" />
+    <link rel="alternate" type="application/rss+xml" title="CG.Lee Blog" href="../rss/" />
+    <meta name="google-site-verification" content="pf2yr6i36pchRwvZLtSf4yFa5azDi9OU65zbHs7DdbE" />
+<meta name="naver-site-verification" content="c38d3651e8195007fd35924219e53b770141b3d7"/>
+	</head>
+	<body class="post-template tag-kr tag-code tag-algorithm">
+		<div class="global-wrap">
+		<div class="site-wrap">
+			<div class="nav-mobile-icon">
+	<div class="hamburger hamburger-squeeze">
+		<div class="hamburger-box">
+			<div class="hamburger-inner"></div>
+		</div>
+	</div>
+</div>
+<div class="nav-mobile-wrap">
+	<nav class="nav-mobile-list">
+		<ul>
+			<li class="home  nav-mobile-item"><a href="../">Home</a></li>
+<li class="code  nav-mobile-item"><a href="../tag/code/">CODE</a></li>
+<li class="life  nav-mobile-item"><a href="../tag/life/">LIFE</a></li>
+<li class="tip  nav-mobile-item"><a href="../tag/tip/">TIP</a></li>
+<li class="esl  nav-mobile-item"><a href="https://esl.chulgil.me/">ESL</a></li>
+<li class="author  nav-mobile-item"><a href="https://chulgil.me">Author</a></li>
+
+			<li class="nav-mobile-item search-open-mobile"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.420346,15.5800244 L24,21.1596784 L21.1596784,24 L15.5800244,18.420346 C13.9925104,19.4717887 12.088789,20.0841064 10.0420532,20.0841064 C4.49598037,20.0841064 0,15.5881261 0,10.0420532 C0,4.49598037 4.49598037,0 10.0420532,0 C15.5881261,0 20.0841064,4.49598037 20.0841064,10.0420532 C20.0841064,12.088789 19.4717887,13.9925104 18.420346,15.5800244 Z M10.0420532,16.0672851 C13.3696969,16.0672851 16.0672851,13.3696969 16.0672851,10.0420532 C16.0672851,6.71440951 13.3696969,4.01682129 10.0420532,4.01682129 C6.71440951,4.01682129 4.01682129,6.71440951 4.01682129,10.0420532 C4.01682129,13.3696969 6.71440951,16.0672851 10.0420532,16.0672851 Z"/></svg><span>Search</span></li>		</ul>
+	</nav>
+</div>			<header class="header-wrap">
+	<div class="logo headroom-logo">
+		<div class="table">
+			<a class="image" href="../"><img src="https://static.ghost.org/v1.0.0/images/ghost-logo.svg" alt="CG.Lee Blog"></a>
+
+		</div>
+	</div>
+</header>
+<div class="description">Thoughts, stories and ideas.</div>
+			<nav class ="nav-wrap">
+				<ul>
+					<li class="search-open"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.420346,15.5800244 L24,21.1596784 L21.1596784,24 L15.5800244,18.420346 C13.9925104,19.4717887 12.088789,20.0841064 10.0420532,20.0841064 C4.49598037,20.0841064 0,15.5881261 0,10.0420532 C0,4.49598037 4.49598037,0 10.0420532,0 C15.5881261,0 20.0841064,4.49598037 20.0841064,10.0420532 C20.0841064,12.088789 19.4717887,13.9925104 18.420346,15.5800244 Z M10.0420532,16.0672851 C13.3696969,16.0672851 16.0672851,13.3696969 16.0672851,10.0420532 C16.0672851,6.71440951 13.3696969,4.01682129 10.0420532,4.01682129 C6.71440951,4.01682129 4.01682129,6.71440951 4.01682129,10.0420532 C4.01682129,13.3696969 6.71440951,16.0672851 10.0420532,16.0672851 Z"/></svg></li>					<li class="home  nav-mobile-item"><a href="../">Home</a></li>
+<li class="code  nav-mobile-item"><a href="../tag/code/">CODE</a></li>
+<li class="life  nav-mobile-item"><a href="../tag/life/">LIFE</a></li>
+<li class="tip  nav-mobile-item"><a href="../tag/tip/">TIP</a></li>
+<li class="esl  nav-mobile-item"><a href="https://esl.chulgil.me/">ESL</a></li>
+<li class="author  nav-mobile-item"><a href="https://chulgil.me">Author</a></li>
+
+				</ul>
+			</nav>
+			<div class="post-wrap">
+	<div class="post-content-wrap no-image">
+		<div class="post-header">
+			<h1 class="post-title">알고리즘의 시간 복잡도와 Big-O 쉽게 이해하기</h1>
+			<div class="item-meta post">
+					<a href="../author/chulgil/" class="author-image item-image" style="background-image: url(https://www.gravatar.com/avatar/1c9a877c23005f203f834b78c457bd0e?s&)"></a>
+					<a href="../author/chulgil/">Chulgil.Lee</a>
+					<br>
+				<time datetime="2019-02-07"> Published 4 days ago</time>
+			</div>
+		</div>
+		<div class="post-content">
+			<p>삼성역에서 택시를 타고 강남역으로 향했는데 30분 걸렸다. 구글에서 알려주는 최단경로로 갔더라면 15분내에 도착할 것이다. 레스토랑을 예약해서 가는 경우라던지 친구와 약속시간을 잡은경우 우리에게는 시간은 항상 소중하다. 그래서 우리는 시간을 효율적으로 사용하기위한 노력을 의식적으로 하고 있다.<br>
+컴퓨터 프로그래밍에서도 시간복잡도가 가장 낮은 알고리즘을 채택해 이러한 상황을 개선하고 있다. 택시를 타고 삼성역까지 가는 절차를 알고리즘이라고 하는데 이때 수행하는 연산의 수를 시간복잡도로 나타낸다. 택시를 타고 강남역까지 가는 과정을 알고리즘으로 표현하면 아래와 같다.</p>
+<pre><code>function TakeTaxy(from, to) {
+/*
+ 1. 차량에 탑승한다.
+ 2. from에서 to까지 최단거리 루트를 선택한다.
+ 3.   목적지까지 가는 루트을 설명한다.
+ 4.   출퇴근 시간의 경우 차가 막히는 루트는 피한다.
+ 5. 출발하는동안
+ 6.   만약 적색 신호등이면 정지한다.
+ 7.   만약 녹색 신호등이면 출발한다.
+ 8. 도착하면
+ 9.   요금을 정산한다.
+ 10. 차량에서 내린다.
+*/
+}
+</code></pre>
+<p>따라서 알고리즘이란</p>
+<ul>
+<li>어떤 목적을 달성하거나 결과물을 만들어내기 위해 거쳐야 하는 일련의 과정들을 의미한다.</li>
+<li>가는 루트는 다양하며 여러가지 상황에 따른 알고리즘은 모두 다르다. 따라서 시간복잡도가 가장 낮은 알고리즘을 선택하여 사용한다.</li>
+</ul>
+<p>여기서 알고리즘의 실행시간은 컴퓨터가 알고리즘 코드를 실행하는 속도에 의존한다.<br>
+이 속도는 컴퓨터의 처리속도, 사용된 언어종류, 컴파일러의 속도에 달려있다.</p>
+<p>알고리즘의 실행시간을 두 부분으로 나누면</p>
+<ol>
+<li>입력값의 크기에 따라 알고리즘의 실행시간을 검증해볼 수 있다.</li>
+<li>입력값의 크기에 따른 함수의 증가량, 우리는 이것을 성장률이라고 부른다.<br>
+이때 중요하지 않는 상수와 계수들을 제거하면 알고리즘의 실행시간에서 중요한<br>
+성장률에 집중할 수있는데 이것을 점금적 표기법(Asymptotic notation)이라 부른다.<br>
+여기서, 점근적이라는 의미는 가장 큰 영향을 주는 항만 계산한다는 의미다.</li>
+</ol>
+<p>점근적 표기법은 다음 세가지가 있는데 시간복잡도를 나타내는데 사용된다.</p>
+<ul>
+<li>최상의 경우 : 오메가 표기법 (Big-Ω Notation)</li>
+<li>평균의 경우 : 세타 표기법 (Big-θ Notation)</li>
+<li>최악의 경우 : 빅오 표기법 (Big-O Notation)</li>
+</ul>
+<p>평균인 세타 표기를 하면 가장 정확하고 좋겠지만 평가하기가 까다롭다.<br>
+그래서 최악의 경우인 빅오를 사용하는데 알고리즘이 최악일때의 경우를 판단하면 평균과 가까운 성능으로 예측하기 쉽기때문이다.</p>
+<h2 id="bigo">빅오 표기법(Big-O)</h2>
+<p>빅오 표기법은 불필요한 연산을 제거하여 알고리즘분석을 쉽게 할 목적으로 사용된다.</p>
+<p>Big-O로 측정되는 복잡성에는 시간과 공간복잡도가 있는데</p>
+<ul>
+<li>시간복잡도는 입력된 N의 크기에 따라 실행되는 조작의 수를 나타낸다.</li>
+<li>공간복잡도는 알고리즘이 실행될때 사용하는 메모리의 양을 나타낸다.<br>
+요즘에는 데이터를 저장할 수 있는 메모리의 발전으로 중요도가 낮아졌다.</li>
+<li>아래는 대표적인 Big-O의 복잡도를 나타내는 표이다.</li>
+</ul>
+<hr>
+<figure class="kg-card kg-image-card kg-width-full"><img src="../content/images/2019/02/Screen-Shot-2019-02-07-at-2.31.54-PM-1.png" class="kg-image"><figcaption>http://bigocheatsheet.com/</figcaption></figure><h2 id="">시간복잡도</h2>
+<p>시간복잡도의 가장 간단한 정의는 알고리즘의 성능을 설명하는 것이다.<br>
+다른의미로는 알고리즘을 수행하기 위해 프로세스가 수행해야하는 연산을 수치화 한것이다.<br>
+왜 실행시간이 아닌 연산수치로 판별할까? 위에도 설명했지만 명령어의 실행시간은 컴퓨터의 하드웨어 또는 프로그래밍 언어에 따라 편차가 크게 달라지기 때문에 명령어의 실행 횟수만을 고려하는 것이다.</p>
+<p>시간복잡도에서 중요하게 보는것은 가장큰 영향을 미치는 n의 단위이다.</p>
+<pre><code>1             O(1)   --&gt; 상수
+2n + 20       O(n)   --&gt; n이 가장 큰영향을 미친다.
+3n^2          O(n^2) --&gt; n^2이 가장 큰영향을 미친다.
+</code></pre>
+<p>시간복잡도의 문제해결 단계를 나열 하면 아래와같다.</p>
+<pre><code>O(1) – 상수 시간 : 문제를 해결하는데 오직 한 단계만 처리함.
+O(log n) – 로그 시간 : 문제를 해결하는데 필요한 단계들이 연산마다 특정 요인에 의해 줄어듬.
+O(n) – 직선적 시간 : 문제를 해결하기 위한 단계의 수와 입력값 n이 1:1 관계를 가짐.
+O(n log n) : 문제를 해결하기 위한 단계의 수가 N*(log2N) 번만큼의 수행시간을 가진다. (선형로그형)
+O(n^2) – 2차 시간 : 문제를 해결하기 위한 단계의 수는 입력값 n의 제곱.
+O(C^n) – 지수 시간 : 문제를 해결하기 위한 단계의 수는 주어진 상수값 C 의 n 제곱.
+</code></pre>
+<p>아래표는 실행시간이 빠른순으로 입력 N값에 따른 서로 다른 알고리즘의 시간복잡도이다.</p>
+<table>
+<thead>
+<tr>
+<th>Complexity</th>
+<th>1</th>
+<th>10</th>
+<th>100</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O(1)</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>O(log N)</td>
+<td>0</td>
+<td>2</td>
+<td>5</td>
+</tr>
+<tr>
+<td>O(N)</td>
+<td>1</td>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td>O(N log N)</td>
+<td>0</td>
+<td>20</td>
+<td>461</td>
+</tr>
+<tr>
+<td>O(N^2)</td>
+<td>1</td>
+<td>100</td>
+<td>10000</td>
+</tr>
+<tr>
+<td>O(2^N)</td>
+<td>1</td>
+<td>1024</td>
+<td>1267650600228229401496703205376</td>
+</tr>
+<tr>
+<td>O(N!)</td>
+<td>1</td>
+<td>3628800</td>
+<td>화면에 표현할 수 없음!</td>
+</tr>
+</tbody>
+</table><h3 id="o1">O(1) : 상수</h3>
+<p>아래 예제 처럼 입력에 관계없이 복잡도는 동일하게 유지된다.</p>
+<pre><code>def hello_world():
+        print(&quot;hello, world!&quot;)
+</code></pre>
+<h3 id="on">O(N) : 선형</h3>
+<p>입력이 증가하면 처리 시간또는 메모리 사용이 선형적으로 증가한다.</p>
+<pre><code>def print_each(li):
+    for item in li:
+        print(item)
+</code></pre>
+<h3 id="on2square">O(N^2) : Square</h3>
+<p>반복문이 두번 있는 케이스</p>
+<pre><code>def print_each_n_times(li):
+    for n in li:
+        for m in li:
+            print(n,m)
+</code></pre>
+<h3 id="olognonlogn">O(log n) O(n log n)</h3>
+<p>주로 입력 크기에 따라 처리 시간이 증가하는 정렬알고리즘에서 많이 사용된다.<br>
+다음은 이진검색의 예이다.</p>
+<pre><code>def binary_search(li, item, first=0, last=None):
+	if not last:
+		last = len(li)
+
+	midpoint = (last - first) / 2 + first
+
+	if li[midpoint] == item:
+		return midpoint
+
+	elif li[midpoint] &gt; item:
+		return binary_search(li, item, first, midpoint)
+
+	else:
+		return binary_search(li, item, midpoint, last)
+
+</code></pre>
+<h2 id="">시간복잡도를 구하는 요령</h2>
+<p>각 문제의 시간복잡도 유형을 빨리 파악할 수 있도록 아래 예를 통해 빠르게 알아 볼수 있다.</p>
+<ul>
+<li>하나의 루프를 사용하여 단일 요소 집합을 반복 하는 경우 : O (n)</li>
+<li>컬렉션의 절반 이상 을 반복 하는 경우 :  O (n / 2) -&gt; O (n)</li>
+<li>두 개의 다른 루프를 사용하여 두 개의 개별 콜렉션을 반복 할 경우 : O (n + m) -&gt; O (n)</li>
+<li>두 개의 중첩 루프를 사용하여 단일 컬렉션을 반복하는 경우 : O (n²)</li>
+<li>두 개의 중첩 루프를 사용하여 두 개의 다른 콜렉션을 반복 할 경우 : O (n * m) -&gt; O (n²)</li>
+<li>컬렉션 정렬을 사용하는 경우 : O(n*log(n))</li>
+</ul>
+<p></p><h2 id="-">정렬 알고리즘 비교</h2> <table >
+         <thead>
+            <tr role="row" >
+               <th rowspan="2" data-column="0" tabindex="0" scope="col" role="columnheader" aria-disabled="false"><div >Sorting Algorithms</div></th>
+               <th >공간 복잡도</div></th>
+               <th><div >시간 복잡도</div></th>
+            </tr>
+
+            <tr role="row" >
+               <th data-column="1" ><div>최악</div></th>
+               <th data-column="2" ><div>최선</div></th>
+               <th data-column="3" ><div>평균</div></th>
+               <th data-column="4" ><div>최악</div></th>
+            </tr>
+         </thead>
+
+         <tbody aria-live="polite" aria-relevant="all">
+         <tr role="row">
+               <td >Bubble Sort</td>
+               <td data-text="1" >O(1)</td>
+
+               <td data-text="3" >O(n)</td>
+               <td data-text="5" >O(n<sup>2</sup>)
+               </td>
+               <td data-text="5" >O(n<sup>2</sup>)
+               </td>
+            </tr><tr role="row">
+               <td >Heapsort</td>
+               <td data-text="1" >O(1)</td>
+
+               <td data-text="4" >O(n log n)</td>
+               <td data-text="4" >O(n log n)</td>
+               <td data-text="4" >O(n log n)</td>
+            </tr><tr role="row">
+               <td >Insertion Sort</td>
+               <td data-text="1" >O(1)</td>
+
+               <td data-text="3" >O(n)</td>
+               <td data-text="5" >O(n<sup>2</sup>)
+               </td>
+               <td data-text="5" >O(n<sup>2</sup>)
+               </td>
+            </tr><tr role="row">
+
+               <td >Mergesort</td>
+               <td data-text="3" >O(n)</td>
+
+               <td data-text="4" >O(n log n)</td>
+               <td data-text="4" >O(n log n)</td>
+               <td data-text="4" >O(n log n)</td>
+
+            </tr><tr role="row">
+
+               <td >Quicksort</td>
+               <td data-text="2" >O(log n)</td>
+
+               <td data-text="4" >O(n log n)</td>
+               <td data-text="4" >O(n log n)</td>
+               <td data-text="4" >O(n log n)</td>
+
+            </tr><tr role="row">
+               <td >Selection Sort</td>
+               <td data-text="1" >O(1)</td>
+
+               <td data-text="5" >O(n<sup>2</sup>)
+               </td>
+               <td data-text="5" >O(n<sup>2</sup>)
+               </td>
+               <td data-text="5" >O(n<sup>2</sup>)
+               </td>
+            </tr><tr role="row">
+               <td >Shell Sort</td>
+               <td data-text="1" >O(1)</td>
+
+               <td data-text="3" >O(n)</td>
+               <td data-text="6" >O(n log n<sup>2</sup>)
+               </td>
+               <td data-text="6" >O(n log n<sup>2</sup>)
+               </td>
+            </tr><tr role="row">
+               <td >Smooth Sort</td>
+               <td data-text="1" >O(1)</td>
+
+               <td data-text="3" >O(n)</td>
+               <td data-text="4" >O(n log n)</td>
+               <td data-text="4" >O(n log n)</td>
+
+            </tr></tbody>
+
+      </table><hr><h2 id="--1">자료구조 비교</h2>
+      <table>
+         <thead>
+            <tr role="row" >
+               <th rowspan="2" data-column="0" tabindex="0" scope="col" role="columnheader" aria-disabled="false"><div >Data  Structures</div></th>
+               <th colspan="3" ><div >Average Case</div></th>
+               <th colspan="3" >Worst Case</div></th>
+            </tr>
+            <tr role="row" >
+               <th data-column="1" >Search</div></th>
+               <th data-column="2" >Insert</div></th>
+               <th data-column="3" >Delete</div></th>
+               <th data-column="4" >Search</div></th>
+               <th data-column="5" >Insert</div></th>
+               <th data-column="6" >Delete</div></th>
+            </tr>
+         </thead>
+
+         <tbody aria-live="polite" aria-relevant="all">
+            <tr role="row">
+               <td >Array</td>
+               <td >O(n)</td>
+               <td >N/A</td>
+               <td >N/A</td>
+               <td >O(n)</td>
+               <td >N/A</td>
+               <td >N/A</td>
+            </tr>
+            <tr role="row">
+               <td >Sorted Array</td>
+               <td >O(log
+                  n)</td>
+               <td >O(n)</td>
+               <td >O(n)</td>
+               <td >O(log
+                  n)</td>
+               <td >O(n)</td>
+               <td >O(n)</td>
+            </tr>
+            <tr role="row">
+               <td >Linked List</td>
+               <td >O(n)</td>
+               <td >O(1)</td>
+               <td >O(1)</td>
+               <td >O(n)</td>
+               <td >O(1)</td>
+               <td >O(1)</td>
+            </tr>
+            <tr role="row">
+               <td >Doubly Linked List</td>
+               <td >O(n)</td>
+               <td >O(1)</td>
+               <td >O(1)</td>
+               <td >O(n)</td>
+               <td >O(1)</td>
+               <td >O(1)</td>
+            </tr>
+            <tr role="row">
+               <td >Stack</td>
+               <td >O(n)</td>
+               <td >O(1)</td>
+               <td >O(1)</td>
+               <td >O(n)</td>
+               <td >O(1)</td>
+               <td >O(1)</td>
+            </tr>
+            <tr role="row">
+               <td >Hash table</td>
+               <td >O(1)</td>
+               <td >O(1)</td>
+               <td >O(1)</td>
+               <td >O(n)</td>
+               <td >O(n)</td>
+               <td >O(n)</td>
+            </tr>
+            <tr role="row">
+               <td >Binary Search Tree</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+
+                  n)</td>
+               <td >O(log
+                  n)</td>
+               <td >O(n)</td>
+               <td >O(n)</td>
+               <td >O(n)</td>
+            </tr>
+            <tr role="row">
+               <td >B-Tree</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+                  n)</td>
+            </tr>
+            <tr role="row">
+               <td >Red-Black tree</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+                  n)</td>
+            </tr>
+            <tr role="row">
+               <td >AVL Tree</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+                  n)</td>
+               <td >O(log
+                  n)</td>
+            </tr>
+
+         </tbody>
+      </table>
+			<div class="post-meta">
+				<div class="left">
+					<div class="post-share">
+	<a href="https://twitter.com/intent/tweet?text=%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%EC%9D%98%20%EC%8B%9C%EA%B0%84%20%EB%B3%B5%EC%9E%A1%EB%8F%84%EC%99%80%20Big-O%20%EC%89%BD%EA%B2%8C%20%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0&amp;url=https://blog.chulgil.me/algorithm/"
+	onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;"><i class="twitter"></i>
+	</a><a href="https://www.facebook.com/sharer/sharer.php?u=https://blog.chulgil.me/algorithm/"
+	onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><i class="facebook"></i>
+	</a><a href="https://plus.google.com/share?url=https://blog.chulgil.me/algorithm/"
+	onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;"><i class="google-plus"></i></a>
+</div>				</div>
+				<div class="right">
+					Tags: <a href="../tag/kr/">kr</a>, <a href="../tag/code/">CODE</a>, <a href="../tag/algorithm/">ALGORITHM</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="related-posts-wrap is-related-posts">
+    <div class="related-title">Related articles</div>
+    <section class="related-post post tag-kr tag-code tag-algorithm tag-leetcode no-image">
+        <div class="related-post-title">
+            <h3><a href="../leetcode-263/">[LeetCode] #263 - Ugly Number</a>
+            </h3>
+        </div>
+        <div class="related-post-author">
+            <a href="../author/chulgil/">Chulgil.Lee</a><br>
+        </div>   
+    </section>
+    
+    <section class="related-post post tag-kr tag-code tag-algorithm tag-leetcode no-image">
+        <div class="related-post-title">
+            <h3><a href="../leetcode-016/">[LeetCode] #16 - 3Sum Closest</a>
+            </h3>
+        </div>
+        <div class="related-post-author">
+            <a href="../author/chulgil/">Chulgil.Lee</a><br>
+        </div>   
+    </section>
+    
+    <section class="related-post post tag-kr tag-code tag-algorithm tag-leetcode no-image">
+        <div class="related-post-title">
+            <h3><a href="../leetcode-015-2/">[LeetCode] #015 Three Sum - Improve speed</a>
+            </h3>
+        </div>
+        <div class="related-post-author">
+            <a href="../author/chulgil/">Chulgil.Lee</a><br>
+        </div>   
+    </section>
+</div>
+<div class="pagination-wrap first" role="navigation">
+	<hr>
+	<a class="older-posts" href="../leetcode-263/">Older Article</a>
+</div><div class="disqus"></div>
+
+		</div>
+		<footer class="footer-wrap">
+	<div class="footer-social">
+		<a href="https://www.facebook.com/chulgil2"><i class="facebook"></i></a>
+		<a href="https://twitter.com/chulgil_lee"><i class="twitter"></i></a>
+			</div>
+	<div class="footer-copyright">
+		Copyright &copy; 2019, <a href="../">CG.Lee Blog</a>. All Right Reserved.
+		<br>
+		Published with <a href="https://ghost.org">Ghost</a>.
+	</div>
+</footer>	</div>
+		<div class="section-search flex">
+	<div class="search-close"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.4285714,12 L24,20.5714286 L20.5714286,24 L12,15.4285714 L3.42857143,24 L3.55271368e-15,20.5714286 L8.57142857,12 L5.32907052e-15,3.42857143 L3.42857143,3.55271368e-15 L12,8.57142857 L20.5714286,3.55271368e-15 L24,3.42857143 L15.4285714,12 Z"/></svg></div>
+	<div class="search-image" style="background-image: url(../content/images/2019/01/life-1.png)">
+	</div>
+	<div class="search-wrap">
+		<div class="search-content">
+			<form class="search-form flex" onsubmit="return false">
+				<input type="text" class="search-input" placeholder="Type your keywords..." autofocus>
+			</form>
+			<div class="search-meta">
+				<span class="search-info-wrap">Please enter at least 3 characters</span>
+				<span class="search-counter-wrap hide">
+					<span class="counter-results">0</span>
+				Results for your search</span>
+			</div>
+			<div class="search-results">
+			</div>
+			<div class="search-suggestion flex">
+				<div class="search-suggestion-tags">
+	<h3>May we suggest a tag?</h3>
+	<a class="post-tag global-tag" href="../tag/kr/">kr</a>
+	<a class="post-tag global-tag" href="../tag/tip/">TIP</a>
+	<a class="post-tag global-tag" href="../tag/blog/">BLOG</a>
+	<a class="post-tag global-tag" href="../tag/code/">CODE</a>
+	<a class="post-tag global-tag" href="../tag/algorithm/">ALGORITHM</a>
+	<a class="post-tag global-tag" href="../tag/leetcode/">LeetCode</a>
+	<a class="post-tag global-tag" href="../tag/life/">LIFE</a>
+	<a class="post-tag global-tag" href="../tag/db/">DB</a>
+	<a class="post-tag global-tag" href="../tag/mac/">MAC</a>
+	<a class="post-tag global-tag" href="../tag/glossary/">GLOSSARY</a>
+</div>
+				<div class="search-suggestion-authors">
+	<h3>May we suggest an author?</h3>
+	<a class="post-tag global-tag" href="../author/chulgil/">Chulgil.Lee</a>
+	<a class="post-tag global-tag" href="../author/ghost/">Ghost</a>
+</div>
+			</div>
+		</div>
+		<div class="search-footer">
+			<a href="../">CG.Lee Blog.</a>
+			<span>Thoughts, stories and ideas.</span>
+		</div>
+	</div>
+</div>
+<script>
+		var searchPublished = 'Published';
+		var searchFeaturedIcon = '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.9712403,8.05987765 L16.2291373,8.05987765 L12.796794,0.459688839 C12.5516266,-0.153229613 11.4483734,-0.153229613 11.0806223,0.459688839 L7.64827899,8.05987765 L0.906176009,8.05987765 C0.538424938,8.05987765 0.170673866,8.30504503 0.0480901758,8.6727961 C-0.0744935148,9.04054717 0.0480901758,9.40829825 0.293257557,9.65346563 L5.31918887,14.3116459 L3.11268244,22.4021694 C2.99009875,22.7699205 3.11268244,23.1376716 3.48043351,23.382839 C3.72560089,23.6280063 4.21593565,23.6280063 4.46110303,23.5054227 L11.9387082,19.2149935 L19.4163133,23.5054227 C19.538897,23.6280063 19.6614807,23.6280063 19.906648,23.6280063 C20.1518154,23.6280063 20.2743991,23.5054227 20.5195665,23.382839 C20.7647339,23.1376716 20.8873176,22.7699205 20.8873176,22.4021694 L18.6808111,14.3116459 L23.7067424,9.65346563 C23.9519098,9.40829825 24.0744935,9.04054717 23.9519098,8.6727961 C23.7067424,8.30504503 23.3389914,8.05987765 22.9712403,8.05987765 Z"/></svg>';
+</script>
+		<script src="../assets/js/global.js?v=c64ad04006"></script>
+		<script src="../assets/js/post.js?v=c64ad04006"></script>
+		<script>var options={scriptUrl:"//cglee-blog.disqus.com/embed.js",laziness:1,throttle:250,disqusConfig:function(){this.page.identifier="5c5b68b28db38e000104539e"}};disqusLoader(".disqus",options);</script>
+		<script src="../assets/js/global-search.js?v=c64ad04006"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-132271510-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-132271510-2');
+</script>
+<script>
+document.body.ondragstart = function () { return false };
+$('a').each(function() {
+	var a = new RegExp('/' + window.location.host + '/');
+	if(!a.test(this.href)) {
+       	$(this).click(function(event) {
+            event.preventDefault();
+           	event.stopPropagation();
+           	window.open(this.href, '_blank');
+      	});
+  	 }
+});
+</script>
+	</body>
+</html>

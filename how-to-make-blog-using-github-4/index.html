@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>블로그 만들기 GitHub 심화 4편 - Jekyll 템플릿</title>
+		<meta name="HandheldFriendly" content="True">
+		<meta name="MobileOptimized" content="320">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400i&amp;subset=latin-ext" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../assets/css/normalize.css?v=c64ad04006">
+		<link rel="stylesheet" type="text/css" href="../assets/css/icons.css?v=c64ad04006">
+		<link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=c64ad04006">
+		<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="amp/" />
+    
+    <meta property="og:site_name" content="CG.Lee Blog" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="블로그 만들기 GitHub 심화 4편 - Jekyll 템플릿" />
+    <meta property="og:description" content="목차 블로그 만들기 GitHub 총정리 블로그 만들기 GitHub 기본 1편 - 사용자 페이지 블로그 만들기 GitHub 기본 2편 - 프로젝트 페이지 블로그 만들기 GitHub 심화 3편 - 커스텀 도메인 블로그 만들기 GitHub 심화 4편 - Jekyll 템플릿 블로그 만들기 GitHub 심화 5편 - GitBook만들기 지난번 글에서는 기본제공되는 심플한 블로그 위주로" />
+    <meta property="og:url" content="https://blog.chulgil.me/how-to-make-blog-using-github-4/" />
+    <meta property="article:published_time" content="2019-01-20T22:22:00.000Z" />
+    <meta property="article:modified_time" content="2019-01-23T04:47:16.000Z" />
+    <meta property="article:tag" content="kr" />
+    <meta property="article:tag" content="BLOG" />
+    <meta property="article:tag" content="TIP" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/chulgil2" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="블로그 만들기 GitHub 심화 4편 - Jekyll 템플릿" />
+    <meta name="twitter:description" content="목차 블로그 만들기 GitHub 총정리 블로그 만들기 GitHub 기본 1편 - 사용자 페이지 블로그 만들기 GitHub 기본 2편 - 프로젝트 페이지 블로그 만들기 GitHub 심화 3편 - 커스텀 도메인 블로그 만들기 GitHub 심화 4편 - Jekyll 템플릿 블로그 만들기 GitHub 심화 5편 - GitBook만들기 지난번 글에서는 기본제공되는 심플한 블로그 위주로" />
+    <meta name="twitter:url" content="https://blog.chulgil.me/how-to-make-blog-using-github-4/" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Chulgil.Lee" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="kr, BLOG, TIP" />
+    <meta name="twitter:site" content="@chulgil_lee" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "CG.Lee Blog",
+        "logo": "https://static.ghost.org/v1.0.0/images/ghost-logo.svg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Chulgil.Lee",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/1c9a877c23005f203f834b78c457bd0e?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://blog.chulgil.me/author/chulgil/",
+        "sameAs": []
+    },
+    "headline": "블로그 만들기 GitHub 심화 4편 - Jekyll 템플릿",
+    "url": "https://blog.chulgil.me/how-to-make-blog-using-github-4/",
+    "datePublished": "2019-01-20T22:22:00.000Z",
+    "dateModified": "2019-01-23T04:47:16.000Z",
+    "keywords": "kr, BLOG, TIP",
+    "description": "목차 블로그 만들기 GitHub 총정리 블로그 만들기 GitHub 기본 1편 - 사용자 페이지 블로그 만들기 GitHub 기본 2편 - 프로젝트 페이지 블로그 만들기 GitHub 심화 3편 - 커스텀 도메인 블로그 만들기 GitHub 심화 4편 - Jekyll 템플릿 블로그 만들기 GitHub 심화 5편 - GitBook만들기 지난번 글에서는 기본제공되는 심플한 블로그 위주로",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.chulgil.me/"
+    }
+}
+    </script>
+
+    <script src="../public/ghost-sdk.min.js?v=c64ad04006"></script>
+<script>
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "ff428a00f312"
+});
+</script>
+    <meta name="generator" content="Ghost 2.10" />
+    <link rel="alternate" type="application/rss+xml" title="CG.Lee Blog" href="../rss/" />
+    <meta name="google-site-verification" content="pf2yr6i36pchRwvZLtSf4yFa5azDi9OU65zbHs7DdbE" />
+<meta name="naver-site-verification" content="c38d3651e8195007fd35924219e53b770141b3d7"/>
+	</head>
+	<body class="post-template tag-kr tag-blog tag-tip">
+		<div class="global-wrap">
+		<div class="site-wrap">
+			<div class="nav-mobile-icon">
+	<div class="hamburger hamburger-squeeze">
+		<div class="hamburger-box">
+			<div class="hamburger-inner"></div>
+		</div>
+	</div>
+</div>
+<div class="nav-mobile-wrap">
+	<nav class="nav-mobile-list">
+		<ul>
+			<li class="home  nav-mobile-item"><a href="../">Home</a></li>
+<li class="code  nav-mobile-item"><a href="../tag/code/">CODE</a></li>
+<li class="life  nav-mobile-item"><a href="../tag/life/">LIFE</a></li>
+<li class="tip  nav-mobile-item"><a href="../tag/tip/">TIP</a></li>
+<li class="esl  nav-mobile-item"><a href="https://esl.chulgil.me/">ESL</a></li>
+<li class="author  nav-mobile-item"><a href="https://chulgil.me">Author</a></li>
+
+			<li class="nav-mobile-item search-open-mobile"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.420346,15.5800244 L24,21.1596784 L21.1596784,24 L15.5800244,18.420346 C13.9925104,19.4717887 12.088789,20.0841064 10.0420532,20.0841064 C4.49598037,20.0841064 0,15.5881261 0,10.0420532 C0,4.49598037 4.49598037,0 10.0420532,0 C15.5881261,0 20.0841064,4.49598037 20.0841064,10.0420532 C20.0841064,12.088789 19.4717887,13.9925104 18.420346,15.5800244 Z M10.0420532,16.0672851 C13.3696969,16.0672851 16.0672851,13.3696969 16.0672851,10.0420532 C16.0672851,6.71440951 13.3696969,4.01682129 10.0420532,4.01682129 C6.71440951,4.01682129 4.01682129,6.71440951 4.01682129,10.0420532 C4.01682129,13.3696969 6.71440951,16.0672851 10.0420532,16.0672851 Z"/></svg><span>Search</span></li>		</ul>
+	</nav>
+</div>			<header class="header-wrap">
+	<div class="logo headroom-logo">
+		<div class="table">
+			<a class="image" href="../"><img src="https://static.ghost.org/v1.0.0/images/ghost-logo.svg" alt="CG.Lee Blog"></a>
+
+		</div>
+	</div>
+</header>
+<div class="description">Thoughts, stories and ideas.</div>
+			<nav class ="nav-wrap">
+				<ul>
+					<li class="search-open"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.420346,15.5800244 L24,21.1596784 L21.1596784,24 L15.5800244,18.420346 C13.9925104,19.4717887 12.088789,20.0841064 10.0420532,20.0841064 C4.49598037,20.0841064 0,15.5881261 0,10.0420532 C0,4.49598037 4.49598037,0 10.0420532,0 C15.5881261,0 20.0841064,4.49598037 20.0841064,10.0420532 C20.0841064,12.088789 19.4717887,13.9925104 18.420346,15.5800244 Z M10.0420532,16.0672851 C13.3696969,16.0672851 16.0672851,13.3696969 16.0672851,10.0420532 C16.0672851,6.71440951 13.3696969,4.01682129 10.0420532,4.01682129 C6.71440951,4.01682129 4.01682129,6.71440951 4.01682129,10.0420532 C4.01682129,13.3696969 6.71440951,16.0672851 10.0420532,16.0672851 Z"/></svg></li>					<li class="home  nav-mobile-item"><a href="../">Home</a></li>
+<li class="code  nav-mobile-item"><a href="../tag/code/">CODE</a></li>
+<li class="life  nav-mobile-item"><a href="../tag/life/">LIFE</a></li>
+<li class="tip  nav-mobile-item"><a href="../tag/tip/">TIP</a></li>
+<li class="esl  nav-mobile-item"><a href="https://esl.chulgil.me/">ESL</a></li>
+<li class="author  nav-mobile-item"><a href="https://chulgil.me">Author</a></li>
+
+				</ul>
+			</nav>
+			<div class="post-wrap">
+	<div class="post-content-wrap no-image">
+		<div class="post-header">
+			<h1 class="post-title">블로그 만들기 GitHub 심화 4편 - Jekyll 템플릿</h1>
+			<div class="item-meta post">
+					<a href="../author/chulgil/" class="author-image item-image" style="background-image: url(https://www.gravatar.com/avatar/1c9a877c23005f203f834b78c457bd0e?s&)"></a>
+					<a href="../author/chulgil/">Chulgil.Lee</a>
+					<br>
+				<time datetime="2019-01-20"> Published 22 days ago</time>
+			</div>
+		</div>
+		<div class="post-content">
+			<h1 id="">목차</h1>
+<ul>
+<li><a href="../how-to-make-blog-using-github/">블로그 만들기 GitHub 총정리</a></li>
+<li><a href="../how-to-make-blog-using-github-1/">블로그 만들기 GitHub 기본 1편 - 사용자 페이지</a></li>
+<li><a href="../how-to-make-blog-using-github-2/">블로그 만들기 GitHub 기본 2편 - 프로젝트 페이지</a></li>
+<li><a href="../how-to-make-blog-using-github-3/">블로그 만들기 GitHub 심화 3편 - 커스텀 도메인</a></li>
+<li><strong>블로그 만들기 GitHub 심화 4편 - Jekyll 템플릿</strong></li>
+<li><a href="../how-to-make-blog-using-github-5/">블로그 만들기 GitHub 심화 5편 - GitBook만들기</a></li>
+</ul>
+<hr><p>지난번 글에서는 기본제공되는 심플한 블로그 위주로 구성했었기 때문에 맘에드는 테마가 없어 실망했을수 있다.  하지만 이번 글에서는 설치할 수 있는 무료 테마를 알아보고 테마를 설치하는 법을 공유한다.</p>
+<h2 id="">이번 글에서는 아래와 같은 목차로 블로그만드는 방법을 설명한다.</h2>
+<blockquote>
+<ol>
+<li>로컬환경에서 테마를 설치</li>
+<li>테마 수정</li>
+<li>GitHub로 배포</li>
+</ol>
+</blockquote>
+<p>기본적으로 <a href="https://jekyllthemes.io">https://jekyllthemes.io</a> 에 접속하면 유료 및 무료 테마를 다운받을 수 있다.<br>
+나는 그중에서 Mediumish가 맘에들어 이 테마로 설치하려 한다.<br>
+먼저 완성된 블로그의 모습을 확인하자.</p>
+<h2 id="1">1. 로컬에서 테마를 설치</h2>
+<p>터미널에서 아래 url로 테마를 클론한다.</p>
+<pre><code>$ git clone https://github.com/wowthemesnet/mediumish-theme-jekyll.git
+$ cd mediumish-theme-jekyll
+$ bundle
+$ jekyll serve
+</code></pre>
+<p>여기까지 진행하였다면  <code>localhost:4000</code>로 접속해보자.<br>
+블로그가 완성되어있는 것을 확인 할 수 있다.</p>
+<h2 id="2">2. 테마 수정</h2>
+<p>완성된 블로그에 내가 쓴글이 아닌 포스트와 메뉴들을 삭제하고 본격적으로 나의 사이트로 바꿔보자.<br>
+일단 <code>_config.yml</code> 파일을 열어보면 메인 사이트 정보가 있는데 이것을 수정하자.</p>
+<h3 id="">사이트 기본설정</h3>
+<pre><code># Site
+name: '블로그 제목'
+description: '블로그 설명'
+meta_description: '블로그 메타테그'
+logo: 'assets/images/logo.png'
+favicon: 'assets/images/logo.png'
+baseurl: '/저장소이름/'
+google_analytics: ''
+disqus: '' #댓글 api 이용시 disqus-id 입력
+mailchimp-list: ''
+</code></pre>
+<h3 id="">사이트 운영자 설정</h3>
+<pre><code># Authors
+authors:
+  sal:
+    name: 사용자 이름
+    display_name: 표시될 이름
+    gravatar: 
+    email: email@gmail.com
+    web: https://username.github.io
+    twitter: https://twitter.com/username
+    description: &quot;사용자 설명&quot;
+</code></pre>
+<h3 id="">첫 포스트 작성하기</h3>
+<p>먼저 작성되어있는 불필요한 파일들을 삭제한다.<br>
+커맨드라인을 통해서 삭제해도 되고 탐색기나 에디터로 삭제 해도된다.</p>
+<pre><code>$ rm -fr .git
+$ rm README.md
+$ rm LICENSE.txt
+$ rm -fr _posts/*
+</code></pre>
+<p>_posts/폴더에 custom_file.md 파일을 생성하고 아래 내용을 넣으면 포스팅이 완료된다.</p>
+<pre><code>---
+layout: post
+title:  &quot;첫포스트&quot;
+author: 사용자명
+categories: [ Jekyll ]
+image: assets/images/11.jpg
+featured: true
+hidden: false
+---
+
+## 첫 블로그 포스트 입니다.
+
+지킬은 심플한 정적 사이트 생성기 입니다.
+지킬은 심플한 정적 사이트 생성기 입니다.
+지킬은 심플한 정적 사이트 생성기 입니다.
+지킬은 심플한 정적 사이트 생성기 입니다.
+지킬은 심플한 정적 사이트 생성기 입니다.
+지킬은 심플한 정적 사이트 생성기 입니다.
+지킬은 심플한 정적 사이트 생성기 입니다.
+지킬은 심플한 정적 사이트 생성기 입니다.
+</code></pre>
+<h3 id="">메뉴 수정하기</h3>
+<p><code>_layout/default.html</code> 파일에 메뉴정보가 있다.</p>
+<p>아래 li a 태그를 만들고자하는 메뉴로 수정하면된다.</p>
+<pre><code>&lt;!-- Begin Menu --&gt;
+  &lt;ul class=&quot;navbar-nav ml-auto&quot;&gt;
+                
+    &lt;li class=&quot;nav-item&quot;&gt;
+      &lt;a class=&quot;nav-link&quot; href=&quot;{{ site.baseurl }}/&quot;&gt;Blog&lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;!-- End Menu --&gt;            
+</code></pre>
+<p>이제 다시 테스트서버를 띄워보면 정보가 변경된것을 확인 할 수 있다.</p>
+<pre><code>$ jekyll serve
+</code></pre>
+<h2 id="3github">3. GitHub로 배포</h2>
+<blockquote>
+<p>그전에 많은 사람들이 <code>_config.yml</code>  baseurl의 모호한 설명으로 많은 문제를 겪고있다.<br>
+나처럼 프로젝트단위로 url을 구성한경우  baseurl뒤에 '/'이 있는지 꼭 확인하자</p>
+</blockquote>
+<pre><code>baseurl: '/저장소이름/'
+</code></pre>
+<p>이제 웹에서 블로그를 확인할 수 있게 본인의 GitHub에서 저장소를 추가한후 위에 만들어놓은<br>
+파일들을 추가하고 push하자.</p>
+<pre><code>$ git clone git@github.com:username/jekyll-mediumish.git
+$ cd jekyll-mediumish
+$ mv ../mediumish-theme-jekyll/* ./
+$ git add .
+$ git commit -m 'init jekyll theme'
+$ git push
+</code></pre>
+<p>이제 이전 포스트에서 설명했듯 GitHub Pages &gt; Source &gt; master branch 로가서 <code>Save</code>를 클릭하면 웹사이트가 완성된다.</p>
+
+			<div class="post-meta">
+				<div class="left">
+					<div class="post-share">
+	<a href="https://twitter.com/intent/tweet?text=%EB%B8%94%EB%A1%9C%EA%B7%B8%20%EB%A7%8C%EB%93%A4%EA%B8%B0%20GitHub%20%EC%8B%AC%ED%99%94%204%ED%8E%B8%20-%20Jekyll%20%ED%85%9C%ED%94%8C%EB%A6%BF&amp;url=https://blog.chulgil.me/how-to-make-blog-using-github-4/"
+	onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;"><i class="twitter"></i>
+	</a><a href="https://www.facebook.com/sharer/sharer.php?u=https://blog.chulgil.me/how-to-make-blog-using-github-4/"
+	onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><i class="facebook"></i>
+	</a><a href="https://plus.google.com/share?url=https://blog.chulgil.me/how-to-make-blog-using-github-4/"
+	onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;"><i class="google-plus"></i></a>
+</div>				</div>
+				<div class="right">
+					Tags: <a href="../tag/kr/">kr</a>, <a href="../tag/blog/">BLOG</a>, <a href="../tag/tip/">TIP</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="related-posts-wrap is-related-posts">
+    <div class="related-title">Related articles</div>
+    <section class="related-post post tag-kr tag-code tag-algorithm tag-leetcode no-image">
+        <div class="related-post-title">
+            <h3><a href="../leetcode-263/">[LeetCode] #263 - Ugly Number</a>
+            </h3>
+        </div>
+        <div class="related-post-author">
+            <a href="../author/chulgil/">Chulgil.Lee</a><br>
+        </div>   
+    </section>
+    
+    <section class="related-post post tag-kr tag-code tag-algorithm tag-leetcode no-image">
+        <div class="related-post-title">
+            <h3><a href="../leetcode-016/">[LeetCode] #16 - 3Sum Closest</a>
+            </h3>
+        </div>
+        <div class="related-post-author">
+            <a href="../author/chulgil/">Chulgil.Lee</a><br>
+        </div>   
+    </section>
+    
+    <section class="related-post post tag-kr tag-code tag-algorithm tag-leetcode no-image">
+        <div class="related-post-title">
+            <h3><a href="../leetcode-015-2/">[LeetCode] #015 Three Sum - Improve speed</a>
+            </h3>
+        </div>
+        <div class="related-post-author">
+            <a href="../author/chulgil/">Chulgil.Lee</a><br>
+        </div>   
+    </section>
+</div>
+<div class="pagination-wrap" role="navigation">
+	<a class="newer-posts" href="../how-to-make-blog-using-github-5/">Newer Article</a>
+	<hr>
+	<a class="older-posts" href="../how-to-make-blog-using-github-3/">Older Article</a>
+</div><div class="disqus"></div>
+
+		</div>
+		<footer class="footer-wrap">
+	<div class="footer-social">
+		<a href="https://www.facebook.com/chulgil2"><i class="facebook"></i></a>
+		<a href="https://twitter.com/chulgil_lee"><i class="twitter"></i></a>
+			</div>
+	<div class="footer-copyright">
+		Copyright &copy; 2019, <a href="../">CG.Lee Blog</a>. All Right Reserved.
+		<br>
+		Published with <a href="https://ghost.org">Ghost</a>.
+	</div>
+</footer>	</div>
+		<div class="section-search flex">
+	<div class="search-close"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.4285714,12 L24,20.5714286 L20.5714286,24 L12,15.4285714 L3.42857143,24 L3.55271368e-15,20.5714286 L8.57142857,12 L5.32907052e-15,3.42857143 L3.42857143,3.55271368e-15 L12,8.57142857 L20.5714286,3.55271368e-15 L24,3.42857143 L15.4285714,12 Z"/></svg></div>
+	<div class="search-image" style="background-image: url(../content/images/2019/01/life-1.png)">
+	</div>
+	<div class="search-wrap">
+		<div class="search-content">
+			<form class="search-form flex" onsubmit="return false">
+				<input type="text" class="search-input" placeholder="Type your keywords..." autofocus>
+			</form>
+			<div class="search-meta">
+				<span class="search-info-wrap">Please enter at least 3 characters</span>
+				<span class="search-counter-wrap hide">
+					<span class="counter-results">0</span>
+				Results for your search</span>
+			</div>
+			<div class="search-results">
+			</div>
+			<div class="search-suggestion flex">
+				<div class="search-suggestion-tags">
+	<h3>May we suggest a tag?</h3>
+	<a class="post-tag global-tag" href="../tag/kr/">kr</a>
+	<a class="post-tag global-tag" href="../tag/tip/">TIP</a>
+	<a class="post-tag global-tag" href="../tag/blog/">BLOG</a>
+	<a class="post-tag global-tag" href="../tag/code/">CODE</a>
+	<a class="post-tag global-tag" href="../tag/algorithm/">ALGORITHM</a>
+	<a class="post-tag global-tag" href="../tag/leetcode/">LeetCode</a>
+	<a class="post-tag global-tag" href="../tag/life/">LIFE</a>
+	<a class="post-tag global-tag" href="../tag/db/">DB</a>
+	<a class="post-tag global-tag" href="../tag/mac/">MAC</a>
+	<a class="post-tag global-tag" href="../tag/glossary/">GLOSSARY</a>
+</div>
+				<div class="search-suggestion-authors">
+	<h3>May we suggest an author?</h3>
+	<a class="post-tag global-tag" href="../author/chulgil/">Chulgil.Lee</a>
+	<a class="post-tag global-tag" href="../author/ghost/">Ghost</a>
+</div>
+			</div>
+		</div>
+		<div class="search-footer">
+			<a href="../">CG.Lee Blog.</a>
+			<span>Thoughts, stories and ideas.</span>
+		</div>
+	</div>
+</div>
+<script>
+		var searchPublished = 'Published';
+		var searchFeaturedIcon = '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.9712403,8.05987765 L16.2291373,8.05987765 L12.796794,0.459688839 C12.5516266,-0.153229613 11.4483734,-0.153229613 11.0806223,0.459688839 L7.64827899,8.05987765 L0.906176009,8.05987765 C0.538424938,8.05987765 0.170673866,8.30504503 0.0480901758,8.6727961 C-0.0744935148,9.04054717 0.0480901758,9.40829825 0.293257557,9.65346563 L5.31918887,14.3116459 L3.11268244,22.4021694 C2.99009875,22.7699205 3.11268244,23.1376716 3.48043351,23.382839 C3.72560089,23.6280063 4.21593565,23.6280063 4.46110303,23.5054227 L11.9387082,19.2149935 L19.4163133,23.5054227 C19.538897,23.6280063 19.6614807,23.6280063 19.906648,23.6280063 C20.1518154,23.6280063 20.2743991,23.5054227 20.5195665,23.382839 C20.7647339,23.1376716 20.8873176,22.7699205 20.8873176,22.4021694 L18.6808111,14.3116459 L23.7067424,9.65346563 C23.9519098,9.40829825 24.0744935,9.04054717 23.9519098,8.6727961 C23.7067424,8.30504503 23.3389914,8.05987765 22.9712403,8.05987765 Z"/></svg>';
+</script>
+		<script src="../assets/js/global.js?v=c64ad04006"></script>
+		<script src="../assets/js/post.js?v=c64ad04006"></script>
+		<script>var options={scriptUrl:"//cglee-blog.disqus.com/embed.js",laziness:1,throttle:250,disqusConfig:function(){this.page.identifier="5c44f3aa8db38e0001044d89"}};disqusLoader(".disqus",options);</script>
+		<script src="../assets/js/global-search.js?v=c64ad04006"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-132271510-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-132271510-2');
+</script>
+<script>
+document.body.ondragstart = function () { return false };
+$('a').each(function() {
+	var a = new RegExp('/' + window.location.host + '/');
+	if(!a.test(this.href)) {
+       	$(this).click(function(event) {
+            event.preventDefault();
+           	event.stopPropagation();
+           	window.open(this.href, '_blank');
+      	});
+  	 }
+});
+</script>
+	</body>
+</html>
